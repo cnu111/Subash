@@ -6,9 +6,9 @@
     <title>Show URL Parameters</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        .param-container { margin: 10px 0; }
-        input { width: 80%; padding: 10px; font-size: 16px; }
-        button { margin-left: 10px; padding: 10px; font-size: 16px; cursor: pointer; }
+        .param-container { margin: 10px 0; display: flex; align-items: center; justify-content: center; }
+        input { width: 60%; padding: 10px; font-size: 16px; margin-right: 10px; }
+        button { padding: 10px; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -19,12 +19,14 @@
         function getQueryParams() {
             let params = new URLSearchParams(window.location.search);
             let container = document.getElementById("params");
+            container.innerHTML = ""; // Clear previous content
+            
             params.forEach((value, key) => {
                 let paramDiv = document.createElement("div");
                 paramDiv.classList.add("param-container");
                 paramDiv.innerHTML = `
-                    <label>${key}:</label>
-                    <input type="text" value="${value}" id="${key}" readonly>
+                    <label for="${key}">${key}:</label>
+                    <input type="text" value="${decodeURIComponent(value)}" id="${key}" readonly>
                     <button onclick="copyToClipboard('${key}')">Copy</button>
                 `;
                 container.appendChild(paramDiv);
@@ -34,11 +36,12 @@
         function copyToClipboard(id) {
             let inputField = document.getElementById(id);
             inputField.select();
+            inputField.setSelectionRange(0, 99999); // For mobile devices
             document.execCommand("copy");
             alert(`Copied ${id} to clipboard!`);
         }
 
-        getQueryParams();
+        document.addEventListener("DOMContentLoaded", getQueryParams);
     </script>
 </body>
 </html>
