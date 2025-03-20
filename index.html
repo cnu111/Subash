@@ -6,33 +6,39 @@
     <title>Show URL Parameters</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        .param-container { margin: 10px 0; }
         input { width: 80%; padding: 10px; font-size: 16px; }
-        button { margin-top: 10px; padding: 10px; font-size: 16px; cursor: pointer; }
+        button { margin-left: 10px; padding: 10px; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
     <h2>Passed URL Parameters</h2>
-    <input type="text" id="paramField" readonly>
-    <button onclick="copyToClipboard()">Copy</button>
+    <div id="params"></div>
 
     <script>
         function getQueryParams() {
             let params = new URLSearchParams(window.location.search);
-            let paramString = "";
+            let container = document.getElementById("params");
             params.forEach((value, key) => {
-                paramString += `${key}=${value}\n`;
+                let paramDiv = document.createElement("div");
+                paramDiv.classList.add("param-container");
+                paramDiv.innerHTML = `
+                    <label>${key}:</label>
+                    <input type="text" value="${value}" id="${key}" readonly>
+                    <button onclick="copyToClipboard('${key}')">Copy</button>
+                `;
+                container.appendChild(paramDiv);
             });
-            return paramString.trim();
         }
 
-        function copyToClipboard() {
-            let inputField = document.getElementById("paramField");
+        function copyToClipboard(id) {
+            let inputField = document.getElementById(id);
             inputField.select();
             document.execCommand("copy");
-            alert("Copied to clipboard!");
+            alert(`Copied ${id} to clipboard!`);
         }
 
-        document.getElementById("paramField").value = getQueryParams();
+        getQueryParams();
     </script>
 </body>
 </html>
