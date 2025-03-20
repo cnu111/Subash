@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show URL Parameters</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input { width: 80%; padding: 10px; font-size: 16px; }
+        button { margin-top: 10px; padding: 10px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Passed URL Parameters</h2>
+    <input type="text" id="paramField" readonly>
+    <button onclick="copyToClipboard()">Copy</button>
+
+    <script>
+        function getQueryParams() {
+            let params = new URLSearchParams(window.location.search);
+            let paramString = "";
+            params.forEach((value, key) => {
+                paramString += `${key}=${value}\n`;
+            });
+            return paramString.trim();
+        }
+
+        function copyToClipboard() {
+            let inputField = document.getElementById("paramField");
+            inputField.select();
+            document.execCommand("copy");
+            alert("Copied to clipboard!");
+        }
+
+        document.getElementById("paramField").value = getQueryParams();
+    </script>
+</body>
+</html>
