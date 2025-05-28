@@ -22,7 +22,6 @@
             container.innerHTML = ""; // Clear previous content
             
             params.forEach((value, key) => {
-                if(key=="data"){
                 let paramDiv = document.createElement("div");
                 paramDiv.classList.add("param-container");
                 paramDiv.innerHTML = `
@@ -31,7 +30,7 @@
                     <button onclick="copyToClipboard('${key}')">Copy</button>
                 `;
                 container.appendChild(paramDiv);
-            }});
+            });
         }
 
         function copyToClipboard(id) {
