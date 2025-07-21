@@ -69,6 +69,49 @@
             height: 100%;
             border: 0;
         }
+
+        /* Styles for the floating bot button */
+        #floating-bot-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            border-radius: 9999px; /* Full rounded */
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        #floating-bot-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Styles for the bot chat modal */
+        #bot-chat-modal {
+            position: fixed;
+            bottom: 6rem; /* Above the floating button */
+            right: 2rem;
+            z-index: 1001;
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 350px;
+            padding: 1.5rem;
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #bot-chat-modal.active {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -116,9 +159,9 @@
             <p class="text-lg md:text-2xl mb-8 opacity-0 animate-fade-in-down" style="animation-delay: 0.5s;">
                 Your Expert in Lift Automation Programming & Advanced Hardware Chip Integration.
             </p>
-            <!-- Changed button text and href for WhatsApp contact -->
-            <a href="https://wa.me/917449052057" target="_blank" class="inline-block bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 btn-pulse opacity-0 animate-fade-in-down" style="animation-delay: 0.8s;">
-                Get Contact (WhatsApp)
+            <!-- Changed button text and href to link to the whatsapp-bot section -->
+            <a href="#whatsapp-bot" class="inline-block bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 btn-pulse opacity-0 animate-fade-in-down" style="animation-delay: 0.8s;">
+                Get Contact
             </a>
         </div>
     </section>
@@ -133,7 +176,7 @@
                         With years of dedicated experience, I specialize in the intricate world of **Lift Automation Programming**. My expertise ensures that elevator systems operate with unparalleled efficiency, safety, and reliability.
                     </p>
                     <p>
-                        Beyond software, I possess deep knowledge in Hardware Chip Integration, designing and implementing the core electronic components that power modern lift systems. My holistic approach guarantees seamless synergy between software and hardware.
+                        Beyond software, I possess deep knowledge in **Hardware Chip Integration**, designing and implementing the core electronic components that power modern lift systems. My holistic approach guarantees seamless synergy between software and hardware.
                     </p>
                 </div>
                 <div class="flex justify-center items-center">
@@ -208,6 +251,26 @@
         </div>
     </section>
 
+    <!-- Floating Bot Button -->
+    <button id="floating-bot-button" class="flex items-center justify-center p-4 text-2xl">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <!-- Bot Chat Modal -->
+    <div id="bot-chat-modal" class="hidden">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-gray-900">How can I help you?</h3>
+            <button id="close-bot-modal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <textarea id="bot-message-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 text-gray-700 mb-4" rows="3" placeholder="Type your message here..."></textarea>
+        <button id="send-to-whatsapp-button" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md flex items-center justify-center space-x-2">
+            <i class="fab fa-whatsapp"></i>
+            <span>Send to WhatsApp</span>
+        </button>
+    </div>
+
     <!-- Footer Section -->
     <footer class="bg-gray-900 text-white py-10 rounded-t-xl shadow-inner">
         <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -247,25 +310,59 @@
         const mobileMenu = document.getElementById('mobile-menu');
 
         mobileMenuButton.addEventListener('click', () => {
-            // Remove 'hidden' to make the menu visible and then apply the transform
             mobileMenu.classList.remove('hidden');
             mobileMenu.classList.remove('-translate-x-full');
         });
 
         closeMobileMenuButton.addEventListener('click', () => {
-            // Add transform to slide out, then add 'hidden' after transition (or immediately for simplicity)
             mobileMenu.classList.add('-translate-x-full');
-            // setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300); // Matches transition duration
-            mobileMenu.classList.add('hidden'); // For immediate hiding after slide
+            mobileMenu.classList.add('hidden');
         });
 
-        // Close mobile menu when a link is clicked
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('-translate-x-full');
-                // setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300); // Matches transition duration
-                mobileMenu.classList.add('hidden'); // For immediate hiding after slide
+                mobileMenu.classList.add('hidden');
             });
+        });
+
+        // Floating Bot JavaScript
+        const floatingBotButton = document.getElementById('floating-bot-button');
+        const botChatModal = document.getElementById('bot-chat-modal');
+        const closeBotModalButton = document.getElementById('close-bot-modal');
+        const sendToWhatsappButton = document.getElementById('send-to-whatsapp-button');
+        const botMessageInput = document.getElementById('bot-message-input');
+
+        floatingBotButton.addEventListener('click', () => {
+            botChatModal.classList.toggle('active');
+            // Ensure the modal is visible when active, hidden otherwise
+            if (botChatModal.classList.contains('active')) {
+                botChatModal.classList.remove('hidden');
+            } else {
+                botChatModal.classList.add('hidden');
+            }
+        });
+
+        closeBotModalButton.addEventListener('click', () => {
+            botChatModal.classList.remove('active');
+            botChatModal.classList.add('hidden');
+        });
+
+        sendToWhatsappButton.addEventListener('click', () => {
+            const message = encodeURIComponent(botMessageInput.value.trim());
+            const whatsappUrl = `https://wa.me/917449052057?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+            botChatModal.classList.remove('active');
+            botChatModal.classList.add('hidden');
+            botMessageInput.value = ''; // Clear input after sending
+        });
+
+        // Close modal if clicked outside (optional, but good UX)
+        document.addEventListener('click', (event) => {
+            if (!botChatModal.contains(event.target) && !floatingBotButton.contains(event.target) && botChatModal.classList.contains('active')) {
+                botChatModal.classList.remove('active');
+                botChatModal.classList.add('hidden');
+            }
         });
     </script>
 </body>
