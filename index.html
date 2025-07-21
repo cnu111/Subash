@@ -230,17 +230,25 @@
         const mobileMenu = document.getElementById('mobile-menu');
 
         mobileMenuButton.addEventListener('click', () => {
+            // Remove 'hidden' to make the menu visible and then apply the transform
+            mobileMenu.classList.remove('hidden');
             mobileMenu.classList.remove('-translate-x-full');
         });
 
         closeMobileMenuButton.addEventListener('click', () => {
+            // Add transform to slide out, then add 'hidden' after transition (or immediately for simplicity)
             mobileMenu.classList.add('-translate-x-full');
+            // A small delay can be added here before adding 'hidden' if a smooth slide-out is desired
+            // setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300); // Matches transition duration
+            mobileMenu.classList.add('hidden'); // For immediate hiding after slide
         });
 
         // Close mobile menu when a link is clicked
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('-translate-x-full');
+                // setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300); // Matches transition duration
+                mobileMenu.classList.add('hidden'); // For immediate hiding after slide
             });
         });
     </script>
