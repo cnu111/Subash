@@ -1,369 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prabhu - Lift Automation Expert</title>
-    <!-- Tailwind CSS CDN for modern styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font: Inter for a clean look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons (e.g., social media) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            /* Changed background to sky blue gradient */
-            background: linear-gradient(to bottom right, #e0f2fe, #bfdbfe); /* Lighter to slightly darker sky blue */
-            background-attachment: fixed;
-            color: #334155; /* Darker text for better contrast */
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111111" />
+  <title>Luxury Car Booking</title>
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --text:#ffffff;
+      --muted:#cfd3d7;
+      --accent:#25d366; /* WhatsApp */
+      --accent-dark:#128c7e;
+      --call:#28a745;
+      --insta-1:#feda75; --insta-2:#d62976; --insta-3:#962fbf; --insta-4:#4f5bd5;
+      --glass: rgba(255,255,255,0.08);
+      --glass-strong: rgba(255,255,255,0.12);
+      --shadow: 0 10px 30px rgba(0,0,0,0.45);
+      --radius: 18px;
+    }
 
-        /* Custom animation for the hero section text */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text);
+      background: var(--bg);
+      overflow-x:hidden;
+    }
 
-        .animate-fade-in-down {
-            animation: fadeInDown 1s ease-out forwards;
-        }
+    /* NAV */
+    nav{
+      position:fixed; inset:0 0 auto 0; height:64px; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 22px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.35));
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .brand{display:flex; gap:10px; align-items:center; font-weight:700; letter-spacing:.5px}
+    .brand .logo{width:36px; height:36px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg,#1f2937,#111827); box-shadow:var(--shadow)}
+    .brand span{font-size:18px}
 
-        /* Custom animation for buttons */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
+    .nav-links{display:flex; gap:20px; align-items:center}
+    .nav-links a{color:var(--text); text-decoration:none; opacity:.9}
+    .nav-links a:hover{opacity:1; color:var(--accent)}
 
-        .btn-pulse:hover {
-            animation: pulse 1s infinite;
-        }
+    /* Hamburger */
+    .hamburger{display:none; width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,0.15); background:var(--glass); backdrop-filter:blur(8px);
+      display:none; align-items:center; justify-content:center; cursor:pointer}
+    .hamburger span,.hamburger::before,.hamburger::after{
+      content:""; display:block; width:20px; height:2px; background:#fff; transition:transform .25s ease,opacity .25s ease; border-radius:2px
+    }
+    .hamburger::before{transform:translateY(-6px)}
+    .hamburger::after{transform:translateY(6px)}
+    .hamburger.active span{opacity:0}
+    .hamburger.active::before{transform:translateY(0) rotate(45deg)}
+    .hamburger.active::after{transform:translateY(0) rotate(-45deg)}
 
-        /* Ensure smooth scrolling for anchor links */
-        html {
-            scroll-behavior: smooth;
-        }
+    /* Mobile drawer */
+    .drawer{position:fixed; top:64px; right:12px; left:12px; background:var(--glass); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.14); border-radius:14px; box-shadow:var(--shadow); display:none}
+    .drawer a{display:block; padding:14px 16px; color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.08)}
+    .drawer a:last-child{border-bottom:none}
 
-        /* Responsive iframe container for the map */
-        .map-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 75%; /* 4:3 Aspect Ratio (height / width = 450 / 600 = 0.75) */
-            height: 0;
-            overflow: hidden;
-            border-radius: 0.75rem; /* rounded-xl */
-        }
+    /* HERO */
+    .hero{
+      min-height:100vh; display:grid; place-items:center; text-align:center; padding:0 16px;
+      background:
+        radial-gradient(60% 70% at 20% 10%, rgba(37,211,102,0.12), transparent 60%),
+        radial-gradient(50% 60% at 80% 30%, rgba(79,91,213,0.14), transparent 60%),
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+        url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+    }
+    .hero-inner{margin-top:64px; max-width:920px}
+    .kicker{display:inline-block; padding:6px 10px; font-size:12px; letter-spacing:.6px; text-transform:uppercase; color:var(--muted); border:1px solid rgba(255,255,255,0.18); border-radius:999px; background:var(--glass)}
+    .title{font-size:clamp(34px,5vw,64px); line-height:1.05; margin:14px auto}
+    .subtitle{font-size:clamp(16px,2.2vw,20px); color:#e7e9ee; opacity:.9; max-width:760px; margin:0 auto 18px}
+    .cta-row{margin-top:18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+    .btn{appearance:none; border:none; cursor:pointer; text-decoration:none; color:#fff; padding:14px 18px; border-radius:12px; font-weight:600; box-shadow:var(--shadow)}
+    .btn-primary{background:linear-gradient(135deg,var(--accent), var(--accent-dark))}
+    .btn-ghost{background:var(--glass); border:1px solid rgba(255,255,255,0.16)}
 
-        .map-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
+    /* CARS */
+    section{padding:80px 18px}
+    .section-title{font-size:28px; text-align:center; margin-bottom:18px}
+    .carousel{max-width:1000px; margin:0 auto; position:relative; overflow:hidden; border-radius:var(--radius); box-shadow:var(--shadow); background:#000}
+    .slides{position:relative}
+    .slides img{width:100%; display:none}
+    .slides img.active{display:block; animation:fade 1.4s ease}
+    @keyframes fade{from{opacity:.25; transform:scale(1.04)} to{opacity:1; transform:scale(1)}}
+    .dots{position:absolute; left:0; right:0; bottom:12px; display:flex; gap:8px; justify-content:center}
+    .dot{width:10px; height:10px; border-radius:999px; background:rgba(255,255,255,0.45); border:1px solid rgba(255,255,255,0.6); cursor:pointer}
+    .dot.active{background:#fff}
+    .ctrl{position:absolute; top:50%; transform:translateY(-50%); background:var(--glass); border:1px solid rgba(255,255,255,0.14); width:44px; height:44px; border-radius:12px; display:grid; place-items:center; cursor:pointer}
+    .ctrl:hover{background:var(--glass-strong)}
+    .ctrl.left{left:12px}
+    .ctrl.right{right:12px}
 
-        /* Styles for the floating bot button */
-        #floating-bot-button {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            background-color: #25D366; /* WhatsApp Green */
-            color: white;
-            border-radius: 9999px; /* Full rounded */
-            padding: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-in-out;
-            cursor: pointer;
-        }
+    /* CONTACT */
+    .contact-wrap{max-width:980px; margin:0 auto; display:grid; grid-template-columns: 1.2fr .8fr; gap:22px}
+    .contact-card{background:var(--glass); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.14); padding:22px; border-radius:var(--radius); box-shadow:var(--shadow)}
+    form{display:grid; gap:12px}
+    label{font-size:14px; color:var(--muted)}
+    input, textarea{width:100%; padding:12px 14px; background:rgba(255,255,255,0.12); color:#fff; border:1px solid rgba(255,255,255,0.18); border-radius:12px}
+    input::placeholder, textarea::placeholder{color:#dde1e6}
+    textarea{min-height:110px; resize:vertical}
+    .submit{background:linear-gradient(135deg,var(--accent), var(--accent-dark)); border:none; color:#fff; padding:14px; border-radius:12px; font-weight:700; cursor:pointer}
 
-        #floating-bot-button:hover {
-            transform: scale(1.1);
-        }
+    .card-side{background:var(--glass); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.14); padding:22px; border-radius:var(--radius); box-shadow:var(--shadow)}
+    .info-line{display:flex; align-items:center; gap:10px; margin:10px 0}
+    .pill{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.16)}
 
-        /* Styles for the bot chat modal */
-        #bot-chat-modal {
-            position: fixed;
-            bottom: 6rem; /* Above the floating button */
-            right: 2rem;
-            z-index: 1001;
-            background-color: white;
-            border-radius: 0.75rem; /* rounded-xl */
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 350px;
-            padding: 1.5rem;
-            transform: translateY(20px) scale(0.95);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease-in-out;
-        }
+    /* Floating action buttons */
+    .fab-col{position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:12px; z-index:1200}
+    .fab{width:56px; height:56px; border-radius:16px; display:grid; place-items:center; color:#fff; text-decoration:none; box-shadow:var(--shadow); transition:transform .2s ease, box-shadow .2s ease}
+    .fab:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(0,0,0,0.55)}
+    .fab.call{background:var(--call)}
+    .fab.wa{background:linear-gradient(135deg,var(--accent), var(--accent-dark))}
+    .fab.ig{background:linear-gradient(135deg,var(--insta-1), var(--insta-2), var(--insta-3), var(--insta-4))}
 
-        #bot-chat-modal.active {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-            visibility: visible;
-        }
-    </style>
+    footer{padding:28px 18px; text-align:center; color:#cdd1d6; background:rgba(0,0,0,0.6); border-top:1px solid rgba(255,255,255,0.14); margin-top:60px}
+
+    /* RESPONSIVE */
+    @media (max-width: 980px){
+      .contact-wrap{grid-template-columns:1fr}
+    }
+    @media (max-width: 760px){
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .fab{width:52px; height:52px; border-radius:14px}
+    }
+  </style>
 </head>
-<body class="antialiased">
-    <!-- Header/Navigation Bar -->
-    <header class="bg-white shadow-lg py-4 px-6 md:px-10 flex items-center justify-between sticky top-0 z-50 rounded-b-xl">
-        <div class="flex items-center space-x-4">
-            <!-- Logo: Changed from placeholder to 'logo.png' -->
-            <img src="logo.png" alt="Company Logo" class="h-10 rounded-md shadow-sm">
-            <div class="text-2xl md:text-3xl font-extrabold text-gray-900">Prabhu</div>
-        </div>
-        <nav class="hidden md:flex space-x-8">
-            <a href="#home" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Home</a>
-            <a href="#about" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">About</a>
-            <a href="#services" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Services</a>
-            <a href="#whatsapp-bot" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Chat Now</a>
-            <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Contact</a>
-        </nav>
-        <!-- Mobile Menu Button (Hamburger) -->
-        <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none">
-            <i class="fas fa-bars text-2xl"></i>
-        </button>
-    </header>
-
-    <!-- Mobile Navigation Menu (Hidden by default) -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg py-4 px-6 fixed top-0 left-0 w-full h-full z-40 flex flex-col items-center justify-center space-y-6 transform -translate-x-full transition-transform duration-300 ease-in-out">
-        <button id="close-mobile-menu" class="absolute top-4 right-6 text-gray-700 hover:text-blue-600 focus:outline-none">
-            <i class="fas fa-times text-3xl"></i>
-        </button>
-        <a href="#home" class="text-gray-800 hover:text-blue-600 text-2xl font-bold transition duration-300" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full');">Home</a>
-        <a href="#about" class="text-gray-800 hover:text-blue-600 text-2xl font-bold transition duration-300" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full');">About</a>
-        <a href="#services" class="text-gray-800 hover:text-blue-600 text-2xl font-bold transition duration-300" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full');">Services</a>
-        <a href="#whatsapp-bot" class="text-gray-800 hover:text-blue-600 text-2xl font-bold transition duration-300" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full');">Chat Now</a>
-        <a href="#contact" class="text-gray-800 hover:text-blue-600 text-2xl font-bold transition duration-300" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full');">Contact</a>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">🚗</div>
+      <span>Car Booking</span>
     </div>
-
-
-    <!-- Hero Section -->
-    <section id="home" class="relative bg-gradient-to-br from-blue-700 to-blue-900 text-white py-20 md:py-32 overflow-hidden shadow-xl">
-        <!-- Background Image: Remains 'chip.jpg' as requested -->
-        <div class="absolute inset-0 opacity-10" style="background-image: url('chip.jpg'); background-size: cover; background-position: center;"></div>
-        <div class="container mx-auto px-6 text-center relative z-10">
-            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-down" style="animation-delay: 0.2s;">
-                Elevating Futures with Smart Automation
-            </h1>
-            <p class="text-lg md:text-2xl mb-8 opacity-0 animate-fade-in-down" style="animation-delay: 0.5s;">
-                Your Expert in Lift Automation Programming & Advanced Hardware Chip Integration.
-            </p>
-            <!-- Changed button text and href to link to the whatsapp-bot section -->
-            <a href="#whatsapp-bot" class="inline-block bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 btn-pulse opacity-0 animate-fade-in-down" style="animation-delay: 0.8s;">
-                Get Contact
-            </a>
-        </div>
-    </section>
-
-    <!-- About Me Section -->
-    <section id="about" class="container mx-auto p-6 md:p-12 my-12">
-        <div class="bg-white rounded-xl shadow-2xl p-8 md:p-12 max-w-4xl mx-auto border-t-4 border-blue-600">
-            <h2 class="text-4xl font-bold text-gray-900 mb-6 text-center">About Prabhu</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div class="text-lg text-gray-700 leading-relaxed">
-                    <p class="mb-4">
-                        With years of dedicated experience, I specialize in the intricate world of **Lift Automation Programming**. My expertise ensures that elevator systems operate with unparalleled efficiency, safety, and reliability.
-                    </p>
-                    <p>
-                        Beyond software, I possess deep knowledge in **Hardware Chip Integration**, designing and implementing the core electronic components that power modern lift systems. My holistic approach guarantees seamless synergy between software and hardware.
-                    </p>
-                </div>
-                <div class="flex justify-center items-center">
-                    <!-- Changed from placeholder to 'automation-concept.jpg' -->
-                    <img src="automation-concept.jpg" alt="Automation Concept" class="rounded-lg shadow-lg max-w-full h-auto">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services/Expertise Section -->
-    <section id="services" class="bg-gray-100 py-12 md:py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-gray-900 mb-10 text-center">My Expertise</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Service Card 1 -->
-                <div class="bg-white rounded-xl shadow-xl p-6 text-center transform hover:scale-105 transition duration-300 border-b-4 border-blue-500">
-                    <i class="fas fa-code text-5xl text-blue-600 mb-4"></i>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Lift Control Programming</h3>
-                    <p class="text-gray-700">Developing robust and efficient software for elevator control systems, ensuring smooth operation and advanced features.</p>
-                </div>
-                <!-- Service Card 2 -->
-                <div class="bg-white rounded-xl shadow-xl p-6 text-center transform hover:scale-105 transition duration-300 border-b-4 border-green-500">
-                    <i class="fas fa-microchip text-5xl text-green-600 mb-4"></i>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Hardware Chip Integration</h3>
-                    <p class="text-gray-700">Designing and integrating custom hardware chips for optimal performance and specialized lift functionalities.</p>
-                </div>
-                <!-- Service Card 3 -->
-                <div class="bg-white rounded-xl shadow-xl p-6 text-center transform hover:scale-105 transition duration-300 border-b-4 border-purple-500">
-                    <i class="fas fa-cogs text-5xl text-purple-600 mb-4"></i>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">System Optimization</h3>
-                    <p class="text-gray-700">Enhancing existing lift systems for improved energy efficiency, reduced maintenance, and extended lifespan.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WhatsApp Bot Section -->
-    <section id="whatsapp-bot" class="container mx-auto p-6 md:p-12 my-12">
-        <div class="bg-white rounded-xl shadow-2xl p-8 md:p-12 max-w-3xl mx-auto border-t-4 border-green-600 text-center">
-            <h2 class="text-4xl font-bold text-gray-900 mb-6">Need Immediate Assistance?</h2>
-            <p class="text-lg text-gray-700 mb-8">
-                Chat with Prabhu directly on WhatsApp for quick answers and personalized support regarding your lift automation needs.
-            </p>
-            <a href="https://wa.me/917449052057" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 btn-pulse flex items-center justify-center space-x-3 max-w-sm mx-auto">
-                <i class="fab fa-whatsapp text-xl"></i>
-                <span>Chat on WhatsApp Now!</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="container mx-auto p-6 md:p-12 my-12">
-        <div class="bg-white rounded-xl shadow-2xl p-8 md:p-12 max-w-3xl mx-auto border-t-4 border-blue-600">
-            <h2 class="text-4xl font-bold text-gray-900 mb-6 text-center">Get in Touch</h2>
-            <p class="text-lg text-gray-700 mb-8 text-center">
-                Have a project in mind or need expert consultation? Reach out to me!
-            </p>
-            <div class="flex flex-col items-center space-y-5 mb-8">
-                <!-- Email Link -->
-                <a href="mailto:officialmugilan@gmail.com" class="w-full max-w-sm bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full text-lg text-center transition duration-300 ease-in-out transform hover:scale-105 shadow-lg flex items-center justify-center space-x-3 btn-pulse">
-                    <i class="fas fa-envelope text-xl"></i>
-                    <span>Send an Email</span>
-                </a>
-            </div>
-
-            <!-- Embedded Google Map -->
-            <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">My Location</h3>
-            <div class="map-container shadow-lg">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1681.3250234664342!2d80.07505469621881!3d12.877130607785082!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f6132d934b49%3A0xa50195f2358dc3e2!2sV3HG%2B4C9%2C%2048%2C%20D.S.Nagar%2C%20Vandalur%2C%20Tamil%20Nadu%20600048!5e1!3m2!1sen!2sin!4v1753095744008!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-    </section>
-
-    <!-- Floating Bot Button -->
-    <button id="floating-bot-button" class="flex items-center justify-center p-4 text-2xl">
-        <i class="fab fa-whatsapp"></i>
-    </button>
-
-    <!-- Bot Chat Modal -->
-    <div id="bot-chat-modal" class="hidden">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold text-gray-900">How can I help you?</h3>
-            <button id="close-bot-modal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-        </div>
-        <textarea id="bot-message-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 text-gray-700 mb-4" rows="3" placeholder="Type your message here..."></textarea>
-        <button id="send-to-whatsapp-button" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md flex items-center justify-center space-x-2">
-            <i class="fab fa-whatsapp"></i>
-            <span>Send to WhatsApp</span>
-        </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#cars">Cars</a>
+      <a href="#contact">Contact</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span></button>
+  </nav>
+  <div class="drawer" id="drawer">
+    <a href="#home">Home</a>
+    <a href="#cars">Cars</a>
+    <a href="#contact">Contact</a>
+  </div>
 
-    <!-- Footer Section -->
-    <footer class="bg-gray-900 text-white py-10 rounded-t-xl shadow-inner">
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-                <h3 class="text-xl font-bold mb-4 text-blue-400">Prabhu</h3>
-                <p class="text-gray-400 text-sm">
-                    Specializing in Lift Automation Programming and Hardware Chip Integration for efficient and reliable elevator systems.
-                </p>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold mb-4 text-blue-400">Quick Links</h3>
-                <ul class="space-y-2">
-                    <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
-                    <li><a href="#about" class="text-400 hover:text-white transition duration-300">About</a></li>
-                    <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Services</a></li>
-                    <li><a href="#whatsapp-bot" class="text-gray-400 hover:text-white transition duration-300">Chat Now</a></li>
-                    <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold mb-4 text-blue-400">Connect</h3>
-                <div class="flex space-x-4 mb-4">
-                    <a href="https://wa.me/917449052057" target="_blank" class="text-gray-400 hover:text-white text-2xl transition duration-300"><i class="fab fa-whatsapp"></i></a>
-                    <a href="mailto:officialmugilan@gmail.com" class="text-gray-400 hover:text-white text-2xl transition duration-300"><i class="fas fa-envelope"></i></a>
-                    <a href="https://maps.app.goo.gl/vJZpDCrJo4NNWHeLA" target="_blank" class="text-gray-400 hover:text-white text-2xl transition duration-300"><i class="fas fa-map-marker-alt"></i></a>
-                    <!-- Add more social media icons if needed -->
-                </div>
-                <p class="text-gray-400 text-sm">&copy; 2025 Prabhu. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <span class="kicker">Premium rides, trusted service</span>
+      <h1 class="title">Book a luxury car in seconds</h1>
+      <p class="subtitle">Instant WhatsApp booking, transparent pricing, and clean, well maintained vehicles. Outstation, airport pickup, and city rides available 24x7.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" id="heroBookNow" href="#contact">Book now</a>
+        <a class="btn btn-ghost" href="#cars">View cars</a>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // JavaScript for mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const closeMobileMenuButton = document.getElementById('close-mobile-menu');
-        const mobileMenu = document.getElementById('mobile-menu');
+  <!-- CARS / SLIDESHOW -->
+  <section id="cars" aria-label="Our cars">
+    <h2 class="section-title">Our fleet</h2>
+    <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Car images">
+      <button class="ctrl left" id="prev" aria-label="Previous slide">◀</button>
+      <div class="slides" id="slides">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1605522300599-27a8d1f7e7a6?auto=format&fit=crop&w=1600&q=80" alt="Black luxury sedan front three quarter" class="active">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1511914265871-c4e8e1a9e6c9?auto=format&fit=crop&w=1600&q=80" alt="Red sports car on road">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1512499617640-c2f999098c01?auto=format&fit=crop&w=1600&q=80" alt="White coupe parked at night">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1541443131876-b9f2b4f8a3b4?auto=format&fit=crop&w=1600&q=80" alt="SUV in mountains">
+      </div>
+      <button class="ctrl right" id="next" aria-label="Next slide">▶</button>
+      <div class="dots" id="dots" aria-hidden="true"></div>
+    </div>
+  </section>
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.remove('hidden');
-            mobileMenu.classList.remove('-translate-x-full');
-        });
+  <!-- CONTACT -->
+  <section id="contact" aria-label="Contact form">
+    <h2 class="section-title">Contact us</h2>
+    <div class="contact-wrap">
+      <div class="contact-card">
+        <form id="contactForm" autocomplete="on">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="Your phone" pattern="[0-9+\-\s]{7,15}" required />
+          </div>
+          <div>
+            <label for="pickup">Pickup location</label>
+            <input id="pickup" name="pickup" type="text" placeholder="Eg. Chennai Airport" />
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Trip date, time, car type" required></textarea>
+          </div>
+          <button class="submit" type="submit">Submit on WhatsApp</button>
+        </form>
+        <p style="margin-top:10px; color:var(--muted); font-size:14px">Submitting opens WhatsApp with your details. You can edit before sending.</p>
+      </div>
+      <aside class="card-side">
+        <div class="pill">24x7 support</div>
+        <div class="pill">Airport pickup</div>
+        <div class="pill">Outstation</div>
+        <div class="info-line">📞 <a id="callInline" href="tel:+919876543210" style="color:#fff; text-decoration:none">+91 98765 43210</a></div>
+        <div class="info-line">📍 Chennai and nearby cities</div>
+        <div class="info-line">🧽 Clean and sanitized cars</div>
+      </aside>
+    </div>
+  </section>
 
-        closeMobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.add('-translate-x-full');
-            mobileMenu.classList.add('hidden');
-        });
+  <!-- Floating buttons -->
+  <div class="fab-col">
+    <a class="fab call" id="callFab" href="tel:+919876543210" aria-label="Call">
+      📞
+    </a>
+    <a class="fab wa" id="waFab" href="https://wa.me/919876543210" target="_blank" rel="noopener" aria-label="WhatsApp">
+      💬
+    </a>
+    <a class="fab ig" href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+      📸
+    </a>
+  </div>
 
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('-translate-x-full');
-                mobileMenu.classList.add('hidden');
-            });
-        });
+  <footer>
+    © 2025 Car Booking. All rights reserved.
+  </footer>
 
-        // Floating Bot JavaScript
-        const floatingBotButton = document.getElementById('floating-bot-button');
-        const botChatModal = document.getElementById('bot-chat-modal');
-        const closeBotModalButton = document.getElementById('close-bot-modal');
-        const sendToWhatsappButton = document.getElementById('send-to-whatsapp-button');
-        const botMessageInput = document.getElementById('bot-message-input');
+  <script>
+    // ===== CONFIG: set your business numbers here once =====
+    const BUSINESS_PHONE_E164 = "919876543210"; // WhatsApp without +
+    const CALL_PHONE = "+919876543210";       // tel: with +
 
-        floatingBotButton.addEventListener('click', () => {
-            botChatModal.classList.toggle('active');
-            // Ensure the modal is visible when active, hidden otherwise
-            if (botChatModal.classList.contains('active')) {
-                botChatModal.classList.remove('hidden');
-            } else {
-                botChatModal.classList.add('hidden');
-            }
-        });
+    // Update all phone dependent links in one place
+    document.getElementById("waFab").href = `https://wa.me/${BUSINESS_PHONE_E164}`;
+    document.getElementById("callFab").href = `tel:${CALL_PHONE}`;
+    document.getElementById("callInline").href = `tel:${CALL_PHONE}`;
 
-        closeBotModalButton.addEventListener('click', () => {
-            botChatModal.classList.remove('active');
-            botChatModal.classList.add('hidden');
-        });
+    // ===== Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('drawer');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
+    });
+    drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+      drawer.style.display='none'; hamburger.classList.remove('active');
+    }));
 
-        sendToWhatsappButton.addEventListener('click', () => {
-            const message = encodeURIComponent(botMessageInput.value.trim());
-            const whatsappUrl = `https://wa.me/917449052057?text=${message}`;
-            window.open(whatsappUrl, '_blank');
-            botChatModal.classList.remove('active');
-            botChatModal.classList.add('hidden');
-            botMessageInput.value = ''; // Clear input after sending
-        });
+    // ===== Carousel
+    const slides = Array.from(document.querySelectorAll('#slides img'));
+    const dotsWrap = document.getElementById('dots');
+    let index = 0; let timer;
 
-        // Close modal if clicked outside (optional, but good UX)
-        document.addEventListener('click', (event) => {
-            if (!botChatModal.contains(event.target) && !floatingBotButton.contains(event.target) && botChatModal.classList.contains('active')) {
-                botChatModal.classList.remove('active');
-                botChatModal.classList.add('hidden');
-            }
-        });
-    </script>
+    function renderDots(){
+      dotsWrap.innerHTML = '';
+      slides.forEach((_,i)=>{
+        const d = document.createElement('button');
+        d.className = 'dot' + (i===index ? ' active' : '');
+        d.addEventListener('click', ()=>go(i));
+        dotsWrap.appendChild(d);
+      });
+    }
+
+    function go(i){
+      slides[index].classList.remove('active');
+      index = (i+slides.length) % slides.length;
+      slides[index].classList.add('active');
+      renderDots();
+      reset();
+    }
+
+    function next(){ go(index+1); }
+    function prev(){ go(index-1); }
+
+    function reset(){
+      clearInterval(timer);
+      timer = setInterval(next, 4000);
+    }
+
+    document.getElementById('next').addEventListener('click', next);
+    document.getElementById('prev').addEventListener('click', prev);
+
+    renderDots();
+    reset();
+
+    // Pause on hover for accessibility
+    const carousel = document.querySelector('.carousel');
+    carousel.addEventListener('mouseenter', ()=>clearInterval(timer));
+    carousel.addEventListener('mouseleave', reset);
+
+    // ===== WhatsApp redirect on form submit
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const pickup = document.getElementById('pickup').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      const text = `Hi, I want to book a car.%0A`+
+                   `Name: ${encodeURIComponent(name)}%0A`+
+                   `Phone: ${encodeURIComponent(phone)}%0A`+
+                   (pickup?`Pickup: ${encodeURIComponent(pickup)}%0A`:``)+
+                   `Message: ${encodeURIComponent(message)}`;
+
+      const waUrl = `https://wa.me/${BUSINESS_PHONE_E164}?text=${text}`;
+      window.open(waUrl, '_blank');
+    });
+  </script>
 </body>
 </html>
