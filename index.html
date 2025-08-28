@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <!-- Sets the character encoding for the document -->
     <meta charset="UTF-8">
@@ -14,14 +14,37 @@
     <!-- Links to Inter and Playfair Display fonts for a premium look -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Apply the Inter font to the entire body, and a serif font for headings */
+        /* Base styles for typography and color palette */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1E293B; /* Deep charcoal background */
-            color: #F3F4F6; /* Light gray for contrast */
+            background-color: #0F172A; /* Deeper charcoal for a richer look */
+            color: #E2E8F0; /* Light gray for contrast */
         }
-        h1, h2 {
+        h1, h2, h3 {
             font-family: 'Playfair Display', serif;
+        }
+
+        /* Hero section with parallax background */
+        .hero-section {
+            background-image: url('https://placehold.co/1920x1080/374151/D1D5DB?text=Subash+Taxi');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         /* Container for a clean background */
@@ -37,7 +60,17 @@
         /* Custom styling for the service icons */
         .service-icon {
             font-size: 3rem;
-            color: #10B981; /* Vibrant green accent color */
+            color: #10B981; /* A clean green accent color */
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .service-box.scrolled .service-icon {
+            animation: bounceIn 1s ease-out forwards;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
         }
 
         /* Carousel specific styles */
@@ -74,7 +107,7 @@
         /* Hover effects for service boxes */
         .service-box:hover {
             transform: translateY(-8px) scale(1.02);
-            background-color: #3C4B60; /* Slightly lighter background on hover */
+            background-color: #1E293B; /* Slightly lighter background on hover */
             box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
         }
 
@@ -92,8 +125,8 @@
             z-index: 1000;
         }
         .modal-content {
-            background-color: #2C3E50; /* Dark modal background */
-            color: #F3F4F6;
+            background-color: #1E293B; /* Dark modal background */
+            color: #E2E8F0;
             padding: 2.5rem;
             border-radius: 1.5rem;
             width: 90%;
@@ -108,7 +141,7 @@
             right: 20px;
             font-size: 1.8rem;
             cursor: pointer;
-            color: #9CA3AF;
+            color: #94A3B8;
         }
 
         /* Bubble button effect for a premium feel */
@@ -124,22 +157,22 @@
         }
         
         .testimonial-card {
-            background-color: #2C3E50;
-            border: 1px solid #4A5568;
+            background-color: #1E293B;
+            border: 1px solid #334155;
             padding: 2rem;
             border-radius: 1.5rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
         .testimonial-text {
-            color: #E5E7EB;
+            color: #E2E8F0;
             font-style: italic;
         }
         .testimonial-author {
-            color: #9CA3AF;
+            color: #94A3B8;
             font-weight: 600;
         }
         .review-section .star-rating {
-            color: #FFD700; /* Gold color for stars */
+            color: #FACC15; /* Gold color for stars */
             font-size: 1.25rem;
         }
         .review-carousel-container {
@@ -147,27 +180,431 @@
         }
         .review-slide {
             display: none;
+            margin-top: 2rem; /* Added space between reviews */
+            margin-bottom: 2rem; /* Added space between reviews */
         }
         .review-slide.active {
             display: grid;
+        }
+
+        /* Floating buttons for call and WhatsApp */
+        .floating-btn-container {
+            position: fixed;
+            bottom: 1.5rem; /* 24px */
+            right: 1.5rem; /* 24px */
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem; /* 20px */
+            z-index: 50;
+        }
+
+        .floating-btn {
+            width: 3.5rem; /* 56px */
+            height: 3.5rem; /* 56px */
+            border-radius: 9999px; /* full rounded */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        @media (min-width: 640px) {
+            .floating-btn {
+                width: 4rem; /* 64px on larger screens */
+                height: 4rem; /* 64px on larger screens */
+            }
+        }
+
+        /* Keyframes for the pulse animation */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        /* New CSS Styles */
+        
+        /* 1. Subtle background glow for sections */
+        .section-card {
+            background: linear-gradient(145deg, #1e293b, #15202e);
+            border: 1px solid #334155;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 2. Shine effect on hover for buttons */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewX(-20deg);
+            transition: left 0.5s ease-in-out;
+        }
+        .btn-shine:hover::after {
+            left: 100%;
+        }
+
+        /* 3. Gradient text for headings */
+        .gradient-text {
+            background: linear-gradient(90deg, #10B981, #34D399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* 4. Glassmorphism effect for a cool, modern feel */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        
+        /* 5. Pulsing animation for the call to action button */
+        .cta-pulse {
+            animation: ctaPulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+        @keyframes ctaPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* 6. A professional, clean input focus style */
+        .input-focus-glow:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5);
+            border-color: #10B981;
+        }
+        
+        /* 7. Underline transition on hover for navigation links */
+        .nav-link-hover {
+            position: relative;
+        }
+        .nav-link-hover::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background-color: #10B981;
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        .nav-link-hover:hover::after {
+            transform: scaleX(1);
+        }
+        
+        /* 8. Subtle transform on image hover */
+        .image-hover-zoom {
+            transition: transform 0.3s ease-in-out;
+        }
+        .image-hover-zoom:hover {
+            transform: scale(1.05);
+        }
+
+        /* 9. Grid item animation on load */
+        .grid-item-fade {
+            animation: gridFadeIn 1s ease-in-out forwards;
+        }
+        @keyframes gridFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 10. Service icon hover animation */
+        .service-icon-hover {
+            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .service-icon-hover:hover {
+            color: #34D399;
+            transform: rotate(10deg);
+        }
+
+        /* New additions for professional look */
+
+        /* 11. Custom scrollbar style for aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+
+        /* 12. Text shadow for readability on gradients */
+        .text-shadow-sm {
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* 13. Animated background for a dynamic effect */
+        .animated-bg {
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 14. 3D card effect on hover */
+        .card-3d-hover {
+            perspective: 1000px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .card-3d-hover:hover {
+            transform: rotateY(5deg) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 15. Subtle inset shadow on sections */
+        .shadow-inset-lg {
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 16. Animated border for call-to-action */
+        .border-animate {
+            position: relative;
+            z-index: 1;
+        }
+        .border-animate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #10B981, #34D399) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: border-animation 4s infinite linear;
+        }
+        @keyframes border-animation {
+            to {
+                -webkit-mask-position: 100% 100%;
+                mask-position: 100% 100%;
+            }
+        }
+        
+        /* 17. Image filter on hover */
+        .image-filter-hover {
+            filter: brightness(0.7) grayscale(1);
+            transition: filter 0.5s ease;
+        }
+        .image-filter-hover:hover {
+            filter: brightness(1) grayscale(0);
+        }
+
+        /* 18. Transform and shadow on section scroll */
+        .section-scroll-transform {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-scroll-transform.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 19. Subtle hover effect for text links */
+        .text-link-hover {
+            position: relative;
+        }
+        .text-link-hover:hover {
+            color: #34D399;
+        }
+        .text-link-hover::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 1px;
+            background-color: #34D399;
+            transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+        }
+        .text-link-hover:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* 20. Spin effect on active nav icon */
+        .nav-icon-spin {
+            transition: transform 0.4s ease-in-out;
+        }
+        .nav-icon-spin.active {
+            transform: rotate(360deg);
+        }
+
+        /* 21. Fade-in animation for review slides */
+        .review-slide-fade {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* 22. Interactive map frame with shadow and border */
+        .map-frame {
+            border-radius: 1.5rem;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+        .map-frame:hover {
+            transform: scale(1.02);
+        }
+
+        /* 23. Gradient overlay for a softer look on images */
+        .image-gradient-overlay {
+            position: relative;
+            z-index: 1;
+        }
+        .image-gradient-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0) 50%);
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        /* 24. A clean, subtle glow on input focus */
+        .input-glow:focus {
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        
+        /* 25. Elegant separator with a gradient line */
+        .gradient-separator {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #10B981, #34D399);
+            margin: 2rem auto;
+            border-radius: 9999px;
+        }
+        
+        /* 26. Custom checkbox style for modern forms */
+        .checkbox-custom {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 0.25rem;
+            border: 2px solid #334155;
+            background-color: #1e293b;
+            cursor: pointer;
+            position: relative;
+        }
+        .checkbox-custom:checked {
+            background-color: #10B981;
+            border-color: #10B981;
+        }
+        .checkbox-custom:checked::after {
+            content: '\2713'; /* Checkmark unicode */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1rem;
+        }
+
+        /* 27. Floating label for input fields */
+        .floating-label-group {
+            position: relative;
+        }
+        .floating-label {
+            position: absolute;
+            top: 1rem;
+            left: 1.25rem;
+            color: #94A3B8;
+            transition: all 0.2s ease-in-out;
+            pointer-events: none;
+        }
+        .floating-label-group input:not(:placeholder-shown) + .floating-label,
+        .floating-label-group input:focus + .floating-label {
+            top: 0.25rem;
+            font-size: 0.75rem;
+            color: #10B981;
+            padding: 0 0.25rem;
+        }
+        
+        /* 28. Animated progress bar for loading state */
+        .progress-bar {
+            height: 5px;
+            background-color: #334155;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, #10B981, #34D399);
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        /* 29. Subtle glow on icons on hover */
+        .icon-glow-hover {
+            transition: text-shadow 0.3s ease-in-out;
+        }
+        .icon-glow-hover:hover {
+            text-shadow: 0 0 8px #10B981;
+        }
+        
+        /* 30. Service image hover effect */
+        .service-image-hover {
+            filter: brightness(0.7) grayscale(1);
+            transition: filter 0.5s ease;
+        }
+        .service-image-hover:hover {
+            filter: brightness(1) grayscale(0);
         }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Sticky Header -->
-    <header class="bg-gray-800 text-white sticky top-0 z-50 shadow-lg">
+    <header class="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-[#10B981]">
-                <i class="fa-solid fa-car-side"></i>
+            <a href="#" class="flex items-center space-x-2 text-2xl font-bold gradient-text">
+                <i class="fa-solid fa-car-side nav-icon-spin"></i>
                 <span>Subash Taxi</span>
             </a>
             <div class="hidden md:flex space-x-8 items-center">
-                <a href="#services" class="text-gray-300 hover:text-white transition-colors duration-300">Services</a>
-                <a href="#fares" class="text-gray-300 hover:text-white transition-colors duration-300">Fares</a>
-                <a href="#reviews" class="text-gray-300 hover:text-white transition-colors duration-300">Reviews</a>
-                <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
-                <a href="#booking" class="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2 rounded-full font-semibold transition-colors duration-300">Book Now</a>
+                <a href="#services" class="text-gray-300 hover:text-white transition-colors duration-300 nav-link-hover text-shadow-sm">Services</a>
+                <a href="#fares" class="text-gray-300 hover:text-white transition-colors duration-300 nav-link-hover text-shadow-sm">Fares</a>
+                <a href="#reviews" class="text-gray-300 hover:text-white transition-colors duration-300 nav-link-hover text-shadow-sm">Reviews</a>
+                <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300 nav-link-hover text-shadow-sm">Contact</a>
+                <a href="#booking" class="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2 rounded-full font-semibold transition-colors duration-300 bubble-btn btn-shine text-shadow-sm">Book Now</a>
             </div>
             <!-- Mobile Menu Button -->
             <button id="mobile-menu-btn" class="md:hidden text-gray-300 focus:outline-none">
@@ -179,11 +616,11 @@
     <!-- Mobile Menu (Hidden by default) -->
     <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-gray-900 z-40 transform -translate-x-full transition-transform duration-300 md:hidden">
         <div class="flex flex-col items-center py-8">
-            <a href="#services" class="text-gray-300 hover:text-white transition-colors duration-300 py-4" onclick="closeMobileMenu()">Services</a>
-            <a href="#fares" class="text-gray-300 hover:text-white transition-colors duration-300 py-4" onclick="closeMobileMenu()">Fares</a>
-            <a href="#reviews" class="text-gray-300 hover:text-white transition-colors duration-300 py-4" onclick="closeMobileMenu()">Reviews</a>
-            <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300 py-4" onclick="closeMobileMenu()">Contact</a>
-            <a href="#booking" class="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2 rounded-full font-semibold mt-4 transition-colors duration-300" onclick="closeMobileMenu()">Book Now</a>
+            <a href="#services" class="text-gray-300 hover:text-white transition-colors duration-300 py-4 text-shadow-sm" onclick="closeMobileMenu()">Services</a>
+            <a href="#fares" class="text-gray-300 hover:text-white transition-colors duration-300 py-4 text-shadow-sm" onclick="closeMobileMenu()">Fares</a>
+            <a href="#reviews" class="text-gray-300 hover:text-white transition-colors duration-300 py-4 text-shadow-sm" onclick="closeMobileMenu()">Reviews</a>
+            <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300 py-4 text-shadow-sm" onclick="closeMobileMenu()">Contact</a>
+            <a href="#booking" class="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2 rounded-full font-semibold mt-4 transition-colors duration-300 text-shadow-sm" onclick="closeMobileMenu()">Book Now</a>
         </div>
     </div>
 
@@ -192,103 +629,149 @@
     <div class="main-container">
 
         <!-- Main Content Card -->
-        <main class="relative z-10 w-full max-w-2xl bg-[#2C3E50] rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-10 mb-8 border border-[#4A5568] animate-fadeIn">
+        <main class="relative z-10 w-full max-w-2xl bg-[#1E293B] rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-10 mb-8 border border-[#334155] section-card">
             <!-- Header Section -->
             <header class="text-center mb-12">
-                <h1 class="text-5xl sm:text-6xl font-extrabold text-[#10B981] mb-4 leading-tight">Subash Call Taxi</h1>
+                <h1 class="text-5xl sm:text-6xl font-extrabold gradient-text mb-4 leading-tight">Subash Call Taxi</h1>
                 <p class="text-xl sm:text-2xl text-gray-300 font-medium tracking-wide">Your journey, elevated.</p>
                 <p class="text-md text-gray-400 mt-2">Premium rides for ultimate comfort and style.</p>
             </header>
 
             <!-- Image Carousel Section -->
-            <div class="carousel-container mx-auto">
+            <div class="carousel-container mx-auto glass-card card-3d-hover">
                 <div id="image-carousel">
                     <!-- Image 1 -->
                     <div class="carousel-slide active">
-                        <img src="car1.jpg" alt="Luxury Sedan" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/374151/D1D5DB?text=Luxury+Car'">
+                        <img src="https://placehold.co/800x450/374151/D1D5DB?text=Luxury+Car" alt="Luxury Sedan" class="carousel-img image-hover-zoom image-filter-hover">
                     </div>
                     <!-- Image 2 -->
                     <div class="carousel-slide">
-                        <img src="car2.jpg" alt="Premium SUV" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/374151/D1D5DB?text=Premium+SUV'">
+                        <img src="https://placehold.co/800x450/374151/D1D5DB?text=Premium+SUV" alt="Premium SUV" class="carousel-img image-hover-zoom image-filter-hover">
                     </div>
                     <!-- Image 3 -->
                     <div class="carousel-slide">
-                        <img src="car3.jpg" alt="Spacious Van" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/374151/D1D5DB?text=Spacious+Van'">
+                        <img src="https://placehold.co/800x450/374151/D1D5DB?text=Spacious+Van" alt="Spacious Van" class="carousel-img image-hover-zoom image-filter-hover">
                     </div>
                 </div>
             </div>
 
-            <!-- New Easy Booking Section -->
-            <section id="booking" class="mb-12 p-8 bg-gray-800 rounded-3xl border border-[#10B981] border-dashed text-center shadow-md">
-                <p class="text-gray-300 font-semibold mb-4 text-lg">Just one click to book your ride!</p>
-                <a href="https://wa.me/919791406236?text=Hi%2C%20I'd%20like%20to%20book%20a%20taxi." class="inline-block w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    <i class="fab fa-whatsapp mr-2 text-xl"></i> Easy Booking by WhatsApp
-                </a>
-                <p class="text-sm text-gray-400 mt-4">Or, use the form below for a custom booking.</p>
-            </section>
-
             <!-- Booking Form Section -->
-            <section class="bg-gray-800 p-8 rounded-3xl border border-gray-700 mb-12 shadow-inner">
-                <h2 class="text-3xl font-bold text-[#10B981] mb-6 text-center">Book Your Ride Now</h2>
+            <section id="booking" class="bg-gray-900 p-8 rounded-3xl border border-gray-800 mb-12 shadow-inner section-card section-scroll-transform">
+                <h2 class="text-3xl font-bold gradient-text mb-6 text-center">Book Your Ride Now</h2>
+                
+                <!-- New Easy Booking Section -->
+                <div class="mb-8 p-6 bg-gray-800 rounded-2xl border border-gray-700 text-center shadow-md">
+                    <h3 class="text-gray-300 font-semibold mb-4 text-lg">Experience effortless booking.</h3>
+                    <a href="https://wa.me/919791406236?text=Hi%2C%20I'd%20like%20to%20book%20a%20taxi." class="inline-block w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg cta-pulse bubble-btn btn-shine text-shadow-sm">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i> Instant Booking via WhatsApp
+                    </a>
+                    <!-- New, shortened text below the button -->
+                    <p class="text-gray-400 mt-4 text-sm font-medium">Or, fill the form below and we'll reach out to you.</p>
+                </div>
+
                 <form id="callBackForm" class="space-y-6">
-                    <!-- Full Name Input -->
-                    <div>
-                        <label for="name" class="block text-gray-400 font-medium mb-1">Full Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your Name"
-                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    <!-- Name Input -->
+                    <div class="floating-label-group">
+                        <input type="text" id="name" name="name" placeholder=" " required
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200 input-focus-glow shadow-inset-lg input-glow">
+                        <label for="name" class="floating-label">Full Name</label>
                     </div>
-                    <!-- Phone Number Input -->
-                    <div>
-                        <label for="phone" class="block text-gray-400 font-medium mb-1">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Your Phone Number"
-                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    <!-- Phone Input -->
+                    <div class="floating-label-group">
+                        <input type="tel" id="phone" name="phone" placeholder=" " required
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200 input-focus-glow shadow-inset-lg input-glow">
+                        <label for="phone" class="floating-label">Phone Number</label>
                     </div>
                     <!-- Date Input -->
-                    <div>
-                        <label for="date" class="block text-gray-400 font-medium mb-1">Date</label>
-                        <input type="date" id="date" name="date"
-                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    <div class="floating-label-group">
+                        <input type="date" id="date" name="date" placeholder=" " required
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200 input-focus-glow shadow-inset-lg input-glow">
+                        <label for="date" class="floating-label">Date</label>
                     </div>
                     <!-- Time Input -->
-                    <div>
-                        <label for="time" class="block text-gray-400 font-medium mb-1">Time</label>
-                        <input type="time" id="time" name="time"
-                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    <div class="floating-label-group">
+                        <input type="time" id="time" name="time" placeholder=" " required
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200 input-focus-glow shadow-inset-lg input-glow">
+                        <label for="time" class="floating-label">Time</label>
                     </div>
                     <!-- Vehicle Type Selection -->
                     <div>
                         <label for="vehicle" class="block text-gray-400 font-medium mb-1">Vehicle Type</label>
                         <select id="vehicle" name="vehicle"
-                                class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                                class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200 input-focus-glow shadow-inset-lg">
                             <option value="sedan">Sedan</option>
                             <option value="suv">SUV</option>
                             <option value="van">Van</option>
                         </select>
                     </div>
                     <!-- Pickup Location Input -->
-                    <div>
-                        <label for="pickup" class="block text-gray-400 font-medium mb-1">Pickup Location</label>
-                        <input type="text" id="pickup" name="pickup" placeholder="e.g., Chennai Airport"
-                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    <div class="floating-label-group">
+                        <input type="text" id="pickup" name="pickup" placeholder=" " required
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200 input-focus-glow shadow-inset-lg input-glow">
+                        <label for="pickup" class="floating-label">Pickup Location</label>
                     </div>
                     <!-- Drop-off Location Input -->
-                    <div>
-                        <label for="dropoff" class="block text-gray-400 font-medium mb-1">Drop-off Location</label>
-                        <input type="text" id="dropoff" name="dropoff" placeholder="e.g., Hotel Taj Coromandel"
-                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    <div class="floating-label-group">
+                        <input type="text" id="dropoff" name="dropoff" placeholder=" " required
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200 input-focus-glow shadow-inset-lg input-glow">
+                        <label for="dropoff" class="floating-label">Drop-off Location</label>
                     </div>
                     <!-- Submit Button -->
                     <button type="submit"
-                            class="w-full text-white font-bold py-5 rounded-xl transition-all duration-300 bubble-btn">
+                            class="w-full text-white font-bold py-5 rounded-xl transition-all duration-300 bubble-btn btn-shine border-animate text-shadow-sm">
                         Book Your Taxi
                     </button>
                 </form>
             </section>
+
+            <!-- Services Section -->
+            <section id="services" class="mb-12 section-card p-6 rounded-3xl section-scroll-transform">
+                <h2 class="text-3xl font-bold gradient-text text-center mb-8">Our Services</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+                    <div class="bg-[#1E293B] p-8 rounded-3xl border border-[#334155] service-box transition-all duration-300 shadow-md grid-item-fade card-3d-hover">
+                        <i class="fa-solid fa-taxi service-icon service-icon-hover mb-4 icon-glow-hover"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Local Travel</h3>
+                        <p class="text-sm text-gray-400 mb-6">Book for travel inside the city.</p>
+                    </div>
+                    <div class="bg-[#1E293B] p-8 rounded-3xl border border-[#334155] service-box transition-all duration-300 shadow-md grid-item-fade card-3d-hover">
+                        <i class="fa-solid fa-road service-icon service-icon-hover mb-4 icon-glow-hover"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Outstation Travel</h3>
+                        <p class="text-sm text-gray-400 mb-6">Book for trips to other cities.</p>
+                    </div>
+                    <div class="bg-[#1E293B] p-8 rounded-3xl border border-[#334155] service-box transition-all duration-300 shadow-md grid-item-fade card-3d-hover">
+                        <i class="fa-solid fa-plane service-icon service-icon-hover mb-4 icon-glow-hover"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Airport Transfer</h3>
+                        <p class="text-sm text-gray-400 mb-6">Easy airport pickup and drop.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- New Features Section -->
+            <section id="features" class="mb-12 section-card p-6 rounded-3xl section-scroll-transform">
+                <h2 class="text-3xl font-bold gradient-text text-center mb-8">Why Choose Us?</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+                    <div class="bg-[#1E293B] p-8 rounded-3xl border border-[#334155] service-box transition-all duration-300 shadow-md grid-item-fade card-3d-hover">
+                        <i class="fa-solid fa-map-location-dot service-icon service-icon-hover mb-4 icon-glow-hover"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Real-time GPS Tracking</h3>
+                        <p class="text-sm text-gray-400">Track your taxi in real-time and share your journey with family and friends for added safety.</p>
+                    </div>
+                    <div class="bg-[#1E293B] p-8 rounded-3xl border border-[#334155] service-box transition-all duration-300 shadow-md grid-item-fade card-3d-hover">
+                        <i class="fa-solid fa-headset service-icon service-icon-hover mb-4 icon-glow-hover"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">24/7 Customer Support</h3>
+                        <p class="text-sm text-gray-400">Our support team is always available to help you with any questions or issues you may have.</p>
+                    </div>
+                    <div class="bg-[#1E293B] p-8 rounded-3xl border border-[#334155] service-box transition-all duration-300 shadow-md grid-item-fade card-3d-hover">
+                        <i class="fa-solid fa-id-card service-icon service-icon-hover mb-4 icon-glow-hover"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Professional Drivers</h3>
+                        <p class="text-sm text-gray-400">Our drivers are well-trained, verified, and committed to providing a safe and comfortable ride.</p>
+                    </div>
+                </div>
+            </section>
             
             <!-- Fare Information Section -->
-            <section id="fares" class="mb-12">
-                <h2 class="text-3xl font-bold text-[#10B981] text-center mb-8">Our Fares (Starting From)</h2>
-                <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-inner">
+            <section id="fares" class="mb-12 section-card p-6 rounded-3xl section-scroll-transform">
+                <h2 class="text-3xl font-bold gradient-text text-center mb-8">Our Fares (Starting From)</h2>
+                <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-inner card-3d-hover">
                     <div class="overflow-x-auto">
                         <table class="min-w-full table-auto text-lg">
                             <thead>
@@ -323,63 +806,14 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Services Section -->
-            <section id="services" class="mb-12">
-                <h2 class="text-3xl font-bold text-[#10B981] text-center mb-8">Our Services</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
-                        <i class="fa-solid fa-taxi service-icon mb-4"></i>
-                        <h3 class="font-bold text-xl text-gray-200 mb-2">Local Travel</h3>
-                        <p class="text-sm text-gray-400 mb-6">Book for travel inside the city.</p>
-                    </div>
-                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
-                        <i class="fa-solid fa-road service-icon mb-4"></i>
-                        <h3 class="font-bold text-xl text-gray-200 mb-2">Outstation Travel</h3>
-                        <p class="text-sm text-gray-400 mb-6">Book for trips to other cities.</p>
-                    </div>
-                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
-                        <i class="fa-solid fa-plane service-icon mb-4"></i>
-                        <h3 class="font-bold text-xl text-gray-200 mb-2">Airport Transfer</h3>
-                        <p class="text-sm text-gray-400 mb-6">Easy airport pickup and drop.</p>
-                    </div>
-                </div>
-            </section>
             
-            <!-- New Features Section -->
-            <section id="features" class="mb-12">
-                <h2 class="text-3xl font-bold text-[#10B981] text-center mb-8">Why Choose Us?</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-center">
-                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
-                        <i class="fa-solid fa-map-location-dot service-icon mb-4"></i>
-                        <h3 class="font-bold text-xl text-gray-200 mb-2">Real-time GPS Tracking</h3>
-                        <p class="text-sm text-gray-400">Track your taxi in real-time and share your journey with family and friends for added safety.</p>
-                    </div>
-                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
-                        <i class="fa-solid fa-headset service-icon mb-4"></i>
-                        <h3 class="font-bold text-xl text-gray-200 mb-2">24/7 Customer Support</h3>
-                        <p class="text-sm text-gray-400">Our support team is always available to help you with any questions or issues you may have.</p>
-                    </div>
-                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
-                        <i class="fa-solid fa-id-card service-icon mb-4"></i>
-                        <h3 class="font-bold text-xl text-gray-200 mb-2">Professional Drivers</h3>
-                        <p class="text-sm text-gray-400">Our drivers are well-trained, verified, and committed to providing a safe and comfortable ride.</p>
-                    </div>
-                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
-                        <i class="fa-solid fa-spray-can-sparkles service-icon mb-4"></i>
-                        <h3 class="font-bold text-xl text-gray-200 mb-2">Clean & Sanitized Cars</h3>
-                        <p class="text-sm text-gray-400">Every car is thoroughly cleaned and sanitized before each ride to ensure your well-being.</p>
-                    </div>
-                </div>
-            </section>
-
             <!-- Reviews Section -->
-            <section id="reviews" class="mb-12 review-section">
-                <h2 class="text-3xl font-bold text-[#10B981] text-center mb-8">What Our Customers Say</h2>
+            <section id="reviews" class="mb-12 review-section section-card p-6 rounded-3xl section-scroll-transform">
+                <h2 class="text-3xl font-bold gradient-text text-center mb-8">What Our Customers Say</h2>
                 <div class="review-carousel-container relative">
                     <!-- First review slide -->
-                    <div class="review-slide active grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        <div class="testimonial-card">
+                    <div class="review-slide active grid grid-cols-1 sm:grid-cols-2 gap-8 review-slide-fade">
+                        <div class="testimonial-card card-3d-hover mb-8 sm:mb-0">
                             <div class="star-rating mb-2">
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
@@ -390,7 +824,7 @@
                             <p class="testimonial-text mb-4">"The service was outstanding. The driver was on time, the car was spotless, and the ride was smooth. Highly recommend!"</p>
                             <p class="testimonial-author">- Divya</p>
                         </div>
-                        <div class="testimonial-card">
+                        <div class="testimonial-card card-3d-hover mb-8 sm:mb-0">
                             <div class="star-rating mb-2">
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
@@ -403,8 +837,8 @@
                         </div>
                     </div>
                     <!-- Second review slide -->
-                    <div class="review-slide grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        <div class="testimonial-card">
+                    <div class="review-slide grid grid-cols-1 sm:grid-cols-2 gap-8 review-slide-fade">
+                        <div class="testimonial-card card-3d-hover mb-8 sm:mb-0">
                             <div class="star-rating mb-2">
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
@@ -415,7 +849,7 @@
                             <p class="testimonial-text mb-4">"The car was very clean and comfortable. It was a great ride. Thank you for the good experience!"</p>
                             <p class="testimonial-author">- Ragul</p>
                         </div>
-                        <div class="testimonial-card">
+                        <div class="testimonial-card card-3d-hover mb-8 sm:mb-0">
                             <div class="star-rating mb-2">
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
@@ -431,18 +865,18 @@
             </section>
 
             <!-- Contact Section -->
-            <section id="contact" class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-inner">
-                <h2 class="text-3xl font-bold text-[#10B981] mb-6 text-center">Contact Us</h2>
+            <section id="contact" class="bg-gray-900 p-8 rounded-3xl border border-gray-800 shadow-inner section-card section-scroll-transform">
+                <h2 class="text-3xl font-bold gradient-text mb-6 text-center">Contact Us</h2>
                 <div class="text-center space-y-4">
                     <p class="text-gray-300 text-lg">Have a question? Call us anytime.</p>
-                    <a href="tel:+919876543210" class="inline-flex items-center text-xl text-[#10B981] hover:underline transition-colors duration-300 font-semibold">
-                        <i class="fa-solid fa-phone mr-2"></i> +91 98765 43210
+                    <a href="tel:+919791406236" class="inline-flex items-center text-xl text-[#10B981] hover:underline transition-colors duration-300 font-semibold nav-link-hover text-link-hover">
+                        <i class="fa-solid fa-phone mr-2 icon-glow-hover"></i> +91 9791406236
                     </a>
                     <p class="text-gray-300 text-lg">Or connect with us on social media.</p>
                     <div class="flex justify-center space-x-6 text-3xl">
-                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300 service-icon-hover icon-glow-hover" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300 service-icon-hover icon-glow-hover" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300 service-icon-hover icon-glow-hover" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </section>
@@ -454,17 +888,17 @@
         </footer>
 
         <!-- Floating Action Buttons for Call and WhatsApp -->
-        <div class="fixed bottom-6 right-6 flex flex-col space-y-5 z-50">
+        <div class="floating-btn-container">
             <!-- WhatsApp Button -->
             <a href="https://wa.me/919791406236"
-               class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white w-16 h-16 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110"
+               class="floating-btn bg-green-500 hover:bg-green-600 text-white shadow-lg"
                target="_blank"
                aria-label="WhatsApp Chat">
-                <i class="fab fa-whatsapp text-3xl"></i>
+                <i class="fab fa-whatsapp text-2xl"></i>
             </a>
             <!-- Call Button -->
             <a href="tel:+919791406236"
-               class="flex items-center justify-center bg-[#10B981] hover:bg-[#059669] text-white w-16 h-16 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110"
+               class="floating-btn bg-[#10B981] hover:bg-[#059669] text-white shadow-lg"
                aria-label="Call Us">
                 <i class="fa-solid fa-phone-volume text-xl"></i>
             </a>
@@ -475,17 +909,17 @@
     <div id="bookingModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-button" onclick="closeModal()">&times;</span>
-            <h3 class="text-3xl font-bold text-[#10B981] mb-4">Confirm Your Booking</h3>
+            <h3 class="text-3xl font-bold gradient-text mb-4">Confirm Your Booking</h3>
             <p id="modal-text" class="text-gray-300 mb-6"></p>
-            <button id="modal-whatsapp-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl transition-colors duration-300">
+            <button id="modal-whatsapp-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl transition-colors duration-300 bubble-btn btn-shine text-shadow-sm">
                 Proceed to WhatsApp
             </button>
         </div>
     </div>
-
+    
     <script>
         // Get all necessary DOM elements
-        const form = document.getElementById('callBackForm');
+        const bookingForm = document.getElementById('callBackForm');
         const slides = document.querySelectorAll('.carousel-slide');
         const reviewSlides = document.querySelectorAll('.review-slide');
         const bookingModal = document.getElementById('bookingModal');
@@ -493,8 +927,24 @@
         const modalWhatsappBtn = document.getElementById('modal-whatsapp-btn');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]'); // Selects all nav links with an href starting with #
+        const dateInput = document.getElementById('date');
+        const timeInput = document.getElementById('time');
+        
         let currentSlide = 0;
         let currentReviewSlide = 0;
+
+        // Set the current date and time on page load
+        window.onload = function() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            dateInput.value = `${year}-${month}-${day}`;
+            timeInput.value = `${hours}:${minutes}`;
+        };
 
         // Function to show a specific carousel slide
         function showSlide(index) {
@@ -531,9 +981,6 @@
         // Set an interval to automatically slide the review carousel every 5 seconds
         setInterval(nextReviewSlide, 5000);
 
-        // Initial call to show the first review slide
-        showReviewSlide(currentReviewSlide);
-
         // Function to show the modal
         function showModal(message, whatsappUrl) {
             modalText.innerText = message;
@@ -558,8 +1005,19 @@
             mobileMenu.classList.add('-translate-x-full');
         }
 
-        // Add a submit event listener to the form
-        form.addEventListener('submit', function(event) {
+        // Add smooth scrolling behavior to all nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add a submit event listener to the booking form
+        bookingForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
             // Get form values
@@ -575,7 +1033,7 @@
             const whatsappNumber = '+919791406236';
 
             // Construct the message string with all the details
-            let whatsappMessage = `Hello Subash Call Taxi, I want to book a taxi.\n\n`;
+            let whatsappMessage = `Hello Subash Call Taxi, I would like to make a reservation for a taxi.\n\n`;
             whatsappMessage += `Name: ${name}\n`;
             whatsappMessage += `Phone: ${phone}\n`;
             whatsappMessage += `Date: ${date}\n`;
@@ -583,6 +1041,7 @@
             whatsappMessage += `Vehicle: ${vehicle}\n`;
             whatsappMessage += `Pickup: ${pickup}\n`;
             whatsappMessage += `Drop-off: ${dropoff}\n`;
+            whatsappMessage += `\nI look forward to hearing from you.`;
 
             // URL-encode the message
             const encodedMessage = encodeURIComponent(whatsappMessage);
@@ -593,6 +1052,26 @@
             // Show the modal with the booking summary
             const modalMessage = `Please confirm to send the following details to us via WhatsApp:\n\nName: ${name}\nPhone: ${phone}\nDate: ${date}\nTime: ${time}\nPickup: ${pickup}\nDrop-off: ${dropoff}`;
             showModal(modalMessage, whatsappUrl);
+        });
+        
+        // Intersection Observer for fade-in effect on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-scroll-transform').forEach(section => {
+            observer.observe(section);
         });
     </script>
 </body>
