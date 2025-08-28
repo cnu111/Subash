@@ -6,7 +6,7 @@
     <!-- Ensures the page is responsive and looks good on all devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Sets the title of the webpage -->
-    <title>Subash Call Taxi - Book Your Premium Ride</title>
+    <title>Subash Call Taxi - Premium Ride Service</title>
     <!-- Loads Tailwind CSS for easy, utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Loads Font Awesome for icons -->
@@ -17,42 +17,27 @@
         /* Apply the Inter font to the entire body, and a serif font for headings */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #121212; /* Dark background for a luxury feel */
-            color: #e0e0e0;
+            background-color: #1E293B; /* Deep charcoal background */
+            color: #F3F4F6; /* Light gray for contrast */
         }
         h1, h2 {
             font-family: 'Playfair Display', serif;
         }
 
-        /* Full-screen background image with a fixed position */
-        .background-container {
-            background-image: url('https://placehold.co/1920x1080/1c1c1c/f5f5f5?text=Subash+Call+Taxi'); /* New placeholder image */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        /* Container for a clean background */
+        .main-container {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            position: relative;
-        }
-
-        /* Overlay to darken the background image and improve text readability */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.75); /* Darker overlay for a moodier, luxury look */
         }
 
         /* Custom styling for the service icons */
         .service-icon {
             font-size: 3rem;
-            color: #e0b445; /* Gold color for a premium touch */
+            color: #10B981; /* Vibrant green accent color */
         }
 
         /* Carousel specific styles */
@@ -63,7 +48,7 @@
             margin-bottom: 2rem;
             border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         .carousel-slide {
             display: none;
@@ -76,6 +61,9 @@
             width: 100%;
             height: auto;
             border-radius: 1rem;
+            /* Ensure images are consistent size and aspect ratio */
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
         }
 
         @keyframes fadeIn {
@@ -85,24 +73,131 @@
 
         /* Hover effects for service boxes */
         .service-box:hover {
-            transform: translateY(-5px);
-            background-color: #1a1a1a;
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7);
+            transform: translateY(-8px) scale(1.02);
+            background-color: #3C4B60; /* Slightly lighter background on hover */
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modal styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #2C3E50; /* Dark modal background */
+            color: #F3F4F6;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #9CA3AF;
+        }
+
+        /* Bubble button effect for a premium feel */
+        .bubble-btn {
+            background-image: linear-gradient(to right, #10B981 0%, #059669 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .bubble-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.6);
+        }
+        
+        .testimonial-card {
+            background-color: #2C3E50;
+            border: 1px solid #4A5568;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .testimonial-text {
+            color: #E5E7EB;
+            font-style: italic;
+        }
+        .testimonial-author {
+            color: #9CA3AF;
+            font-weight: 600;
+        }
+        .review-section .star-rating {
+            color: #FFD700; /* Gold color for stars */
+            font-size: 1.25rem;
+        }
+        .review-carousel-container {
+            position: relative;
+        }
+        .review-slide {
+            display: none;
+        }
+        .review-slide.active {
+            display: grid;
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Background container with image and overlay -->
-    <div class="background-container">
-        <div class="overlay"></div>
+    <!-- Sticky Header -->
+    <header class="bg-gray-800 text-white sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-[#10B981]">
+                <i class="fa-solid fa-car-side"></i>
+                <span>Subash Taxi</span>
+            </a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#services" class="text-gray-300 hover:text-white transition-colors duration-300">Services</a>
+                <a href="#fares" class="text-gray-300 hover:text-white transition-colors duration-300">Fares</a>
+                <a href="#reviews" class="text-gray-300 hover:text-white transition-colors duration-300">Reviews</a>
+                <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+                <a href="#booking" class="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2 rounded-full font-semibold transition-colors duration-300">Book Now</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </nav>
+    </header>
 
-        <!-- Main Container Card, relative to the background for proper z-index -->
-        <main class="relative z-10 w-full max-w-2xl bg-gray-900 bg-opacity-95 rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-10 mb-8 border border-gray-800 animate-fadeIn">
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-gray-900 z-40 transform -translate-x-full transition-transform duration-300 md:hidden">
+        <div class="flex flex-col items-center py-8">
+            <a href="#services" class="text-gray-300 hover:text-white transition-colors duration-300 py-4" onclick="closeMobileMenu()">Services</a>
+            <a href="#fares" class="text-gray-300 hover:text-white transition-colors duration-300 py-4" onclick="closeMobileMenu()">Fares</a>
+            <a href="#reviews" class="text-gray-300 hover:text-white transition-colors duration-300 py-4" onclick="closeMobileMenu()">Reviews</a>
+            <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300 py-4" onclick="closeMobileMenu()">Contact</a>
+            <a href="#booking" class="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2 rounded-full font-semibold mt-4 transition-colors duration-300" onclick="closeMobileMenu()">Book Now</a>
+        </div>
+    </div>
+
+
+    <!-- Main Container for the new clean background -->
+    <div class="main-container">
+
+        <!-- Main Content Card -->
+        <main class="relative z-10 w-full max-w-2xl bg-[#2C3E50] rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-10 mb-8 border border-[#4A5568] animate-fadeIn">
             <!-- Header Section -->
-            <header class="text-center mb-10">
-                <h1 class="text-4xl sm:text-5xl font-extrabold text-amber-500 mb-2">Subash Call Taxi</h1>
-                <p class="text-lg sm:text-xl text-gray-400">Your number one taxi service for all travels.</p>
+            <header class="text-center mb-12">
+                <h1 class="text-5xl sm:text-6xl font-extrabold text-[#10B981] mb-4 leading-tight">Subash Call Taxi</h1>
+                <p class="text-xl sm:text-2xl text-gray-300 font-medium tracking-wide">Your journey, elevated.</p>
+                <p class="text-md text-gray-400 mt-2">Premium rides for ultimate comfort and style.</p>
             </header>
 
             <!-- Image Carousel Section -->
@@ -110,134 +205,301 @@
                 <div id="image-carousel">
                     <!-- Image 1 -->
                     <div class="carousel-slide active">
-                        <img src="car1.jpg" alt="Luxury Sedan" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/1c1c1c/f5f5f5?text=car1.jpg'">
+                        <img src="car1.jpg" alt="Luxury Sedan" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/374151/D1D5DB?text=Luxury+Car'">
                     </div>
                     <!-- Image 2 -->
                     <div class="carousel-slide">
-                        <img src="car2.jpg" alt="Premium SUV" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/1c1c1c/f5f5f5?text=car2.jpg'">
+                        <img src="car2.jpg" alt="Premium SUV" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/374151/D1D5DB?text=Premium+SUV'">
                     </div>
                     <!-- Image 3 -->
                     <div class="carousel-slide">
-                        <img src="car3.jpg" alt="Spacious Van" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/1c1c1c/f5f5f5?text=car3.jpg'">
+                        <img src="car3.jpg" alt="Spacious Van" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/374151/D1D5DB?text=Spacious+Van'">
                     </div>
                 </div>
             </div>
 
+            <!-- New Easy Booking Section -->
+            <section id="booking" class="mb-12 p-8 bg-gray-800 rounded-3xl border border-[#10B981] border-dashed text-center shadow-md">
+                <p class="text-gray-300 font-semibold mb-4 text-lg">Just one click to book your ride!</p>
+                <a href="https://wa.me/919791406236?text=Hi%2C%20I'd%20like%20to%20book%20a%20taxi." class="inline-block w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fab fa-whatsapp mr-2 text-xl"></i> Easy Booking by WhatsApp
+                </a>
+                <p class="text-sm text-gray-400 mt-4">Or, use the form below for a custom booking.</p>
+            </section>
+
             <!-- Booking Form Section -->
-            <section class="bg-gray-800 p-6 rounded-2xl border border-gray-700 mb-8">
-                <h2 class="text-2xl font-bold text-amber-500 mb-4 text-center">Book Your Ride Now</h2>
-                <p class="text-gray-400 mb-6 text-center">Enter your details and click 'Book' to connect with us on WhatsApp.</p>
-                <form id="callBackForm" class="space-y-4">
+            <section class="bg-gray-800 p-8 rounded-3xl border border-gray-700 mb-12 shadow-inner">
+                <h2 class="text-3xl font-bold text-[#10B981] mb-6 text-center">Book Your Ride Now</h2>
+                <form id="callBackForm" class="space-y-6">
                     <!-- Full Name Input -->
                     <div>
                         <label for="name" class="block text-gray-400 font-medium mb-1">Full Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your Name" required
-                               class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <input type="text" id="name" name="name" placeholder="Your Name"
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
                     </div>
                     <!-- Phone Number Input -->
                     <div>
                         <label for="phone" class="block text-gray-400 font-medium mb-1">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required
-                               class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <input type="tel" id="phone" name="phone" placeholder="Your Phone Number"
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    </div>
+                    <!-- Date Input -->
+                    <div>
+                        <label for="date" class="block text-gray-400 font-medium mb-1">Date</label>
+                        <input type="date" id="date" name="date"
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    </div>
+                    <!-- Time Input -->
+                    <div>
+                        <label for="time" class="block text-gray-400 font-medium mb-1">Time</label>
+                        <input type="time" id="time" name="time"
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                    </div>
+                    <!-- Vehicle Type Selection -->
+                    <div>
+                        <label for="vehicle" class="block text-gray-400 font-medium mb-1">Vehicle Type</label>
+                        <select id="vehicle" name="vehicle"
+                                class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="van">Van</option>
+                        </select>
                     </div>
                     <!-- Pickup Location Input -->
                     <div>
                         <label for="pickup" class="block text-gray-400 font-medium mb-1">Pickup Location</label>
-                        <input type="text" id="pickup" name="pickup" placeholder="e.g., Chennai Airport" required
-                               class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <input type="text" id="pickup" name="pickup" placeholder="e.g., Chennai Airport"
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
                     </div>
                     <!-- Drop-off Location Input -->
                     <div>
                         <label for="dropoff" class="block text-gray-400 font-medium mb-1">Drop-off Location</label>
-                        <input type="text" id="dropoff" name="dropoff" placeholder="e.g., Hotel Taj Coromandel" required
-                               class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <input type="text" id="dropoff" name="dropoff" placeholder="e.g., Hotel Taj Coromandel"
+                               class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-200">
                     </div>
                     <!-- Submit Button -->
                     <button type="submit"
-                            class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-4 rounded-xl transition-colors duration-300">
+                            class="w-full text-white font-bold py-5 rounded-xl transition-all duration-300 bubble-btn">
                         Book Your Taxi
                     </button>
                 </form>
             </section>
+            
+            <!-- Fare Information Section -->
+            <section id="fares" class="mb-12">
+                <h2 class="text-3xl font-bold text-[#10B981] text-center mb-8">Our Fares (Starting From)</h2>
+                <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-inner">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full table-auto text-lg">
+                            <thead>
+                                <tr class="text-left text-gray-200 font-semibold border-b border-gray-600">
+                                    <th class="py-4 px-2">Vehicle Type</th>
+                                    <th class="py-4 px-2">Local Travel</th>
+                                    <th class="py-4 px-2">Outstation</th>
+                                    <th class="py-4 px-2">Airport</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-4 px-2">Sedan</td>
+                                    <td class="py-4 px-2">₹12/km</td>
+                                    <td class="py-4 px-2">₹10/km</td>
+                                    <td class="py-4 px-2">₹700</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-4 px-2">SUV</td>
+                                    <td class="py-4 px-2">₹15/km</td>
+                                    <td class="py-4 px-2">₹13/km</td>
+                                    <td class="py-4 px-2">₹900</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-2">Van</td>
+                                    <td class="py-4 px-2">₹18/km</td>
+                                    <td class="py-4 px-2">₹16/km</td>
+                                    <td class="py-4 px-2">₹1100</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
             <!-- Services Section -->
-            <section class="mb-8">
-                <h2 class="text-2xl font-bold text-amber-500 text-center mb-6">Our Services</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 service-box transition-all duration-300">
-                        <i class="fa-solid fa-taxi service-icon mb-2"></i>
-                        <h3 class="font-semibold text-lg text-gray-200 mb-1">Local Travel</h3>
-                        <p class="text-sm text-gray-400">Book for travel inside the city.</p>
+            <section id="services" class="mb-12">
+                <h2 class="text-3xl font-bold text-[#10B981] text-center mb-8">Our Services</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
+                        <i class="fa-solid fa-taxi service-icon mb-4"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Local Travel</h3>
+                        <p class="text-sm text-gray-400 mb-6">Book for travel inside the city.</p>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 service-box transition-all duration-300">
-                        <i class="fa-solid fa-road service-icon mb-2"></i>
-                        <h3 class="font-semibold text-lg text-gray-200 mb-1">Outstation Travel</h3>
-                        <p class="text-sm text-gray-400">Book for trips to other cities.</p>
+                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
+                        <i class="fa-solid fa-road service-icon mb-4"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Outstation Travel</h3>
+                        <p class="text-sm text-gray-400 mb-6">Book for trips to other cities.</p>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 service-box transition-all duration-300">
-                        <i class="fa-solid fa-plane service-icon mb-2"></i>
-                        <h3 class="font-semibold text-lg text-gray-200 mb-1">Airport Transfer</h3>
-                        <p class="text-sm text-gray-400">Easy airport pickup and drop.</p>
+                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
+                        <i class="fa-solid fa-plane service-icon mb-4"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Airport Transfer</h3>
+                        <p class="text-sm text-gray-400 mb-6">Easy airport pickup and drop.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- New Features Section -->
+            <section id="features" class="mb-12">
+                <h2 class="text-3xl font-bold text-[#10B981] text-center mb-8">Why Choose Us?</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-center">
+                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
+                        <i class="fa-solid fa-map-location-dot service-icon mb-4"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Real-time GPS Tracking</h3>
+                        <p class="text-sm text-gray-400">Track your taxi in real-time and share your journey with family and friends for added safety.</p>
+                    </div>
+                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
+                        <i class="fa-solid fa-headset service-icon mb-4"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">24/7 Customer Support</h3>
+                        <p class="text-sm text-gray-400">Our support team is always available to help you with any questions or issues you may have.</p>
+                    </div>
+                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
+                        <i class="fa-solid fa-id-card service-icon mb-4"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Professional Drivers</h3>
+                        <p class="text-sm text-gray-400">Our drivers are well-trained, verified, and committed to providing a safe and comfortable ride.</p>
+                    </div>
+                    <div class="bg-[#2C3E50] p-8 rounded-3xl border border-[#4A5568] service-box transition-all duration-300 shadow-md">
+                        <i class="fa-solid fa-spray-can-sparkles service-icon mb-4"></i>
+                        <h3 class="font-bold text-xl text-gray-200 mb-2">Clean & Sanitized Cars</h3>
+                        <p class="text-sm text-gray-400">Every car is thoroughly cleaned and sanitized before each ride to ensure your well-being.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reviews Section -->
+            <section id="reviews" class="mb-12 review-section">
+                <h2 class="text-3xl font-bold text-[#10B981] text-center mb-8">What Our Customers Say</h2>
+                <div class="review-carousel-container relative">
+                    <!-- First review slide -->
+                    <div class="review-slide active grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div class="testimonial-card">
+                            <div class="star-rating mb-2">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text mb-4">"The service was outstanding. The driver was on time, the car was spotless, and the ride was smooth. Highly recommend!"</p>
+                            <p class="testimonial-author">- Divya</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="star-rating mb-2">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text mb-4">"The car was spacious, and my luggage fit easily. The driver was on time for my airport drop. Very happy!"</p>
+                            <p class="testimonial-author">- RanjithKumar</p>
+                        </div>
+                    </div>
+                    <!-- Second review slide -->
+                    <div class="review-slide grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div class="testimonial-card">
+                            <div class="star-rating mb-2">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <p class="testimonial-text mb-4">"The car was very clean and comfortable. It was a great ride. Thank you for the good experience!"</p>
+                            <p class="testimonial-author">- Ragul</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="star-rating mb-2">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text mb-4">"The seats were very comfortable for the long trip. The ride was quiet and relaxing. A top-notch car!"</p>
+                            <p class="testimonial-author">- Aravind</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- Contact Section -->
-            <section class="bg-gray-800 p-6 rounded-2xl border-2 border-gray-700">
-                <h2 class="text-2xl font-bold text-amber-500 mb-4 text-center">Contact Us</h2>
+            <section id="contact" class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-inner">
+                <h2 class="text-3xl font-bold text-[#10B981] mb-6 text-center">Contact Us</h2>
                 <div class="text-center space-y-4">
-                    <p class="text-gray-400">Have a question? Call us anytime.</p>
-                    <a href="tel:+919791406236" class="inline-flex items-center text-lg text-amber-500 hover:underline transition-colors duration-300">
-                        <i class="fa-solid fa-phone mr-2"></i> +91 9791406236
+                    <p class="text-gray-300 text-lg">Have a question? Call us anytime.</p>
+                    <a href="tel:+919876543210" class="inline-flex items-center text-xl text-[#10B981] hover:underline transition-colors duration-300 font-semibold">
+                        <i class="fa-solid fa-phone mr-2"></i> +91 98765 43210
                     </a>
-                    <p class="text-gray-400">Or find us on social media.</p>
-                    <div class="flex justify-center space-x-4 text-2xl">
-                        <a href="#" class="text-gray-500 hover:text-amber-500 transition-colors duration-300" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-500 hover:text-amber-500 transition-colors duration-300" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-500 hover:text-amber-500 transition-colors duration-300" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <p class="text-gray-300 text-lg">Or connect with us on social media.</p>
+                    <div class="flex justify-center space-x-6 text-3xl">
+                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-[#10B981] transition-colors duration-300" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </section>
         </main>
 
         <!-- Footer -->
-        <footer class="relative z-10 w-full max-w-2xl text-center text-gray-400 text-sm mt-4">
+        <footer class="relative z-10 w-full max-w-2xl text-center text-gray-500 text-sm mt-8">
             &copy; 2024 Subash Call Taxi. All Rights Reserved.
         </footer>
 
         <!-- Floating Action Buttons for Call and WhatsApp -->
-        <div class="fixed bottom-5 right-5 flex flex-col space-y-4 z-50">
+        <div class="fixed bottom-6 right-6 flex flex-col space-y-5 z-50">
             <!-- WhatsApp Button -->
             <a href="https://wa.me/919791406236"
-               class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white w-14 h-14 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110"
+               class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white w-16 h-16 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110"
                target="_blank"
                aria-label="WhatsApp Chat">
                 <i class="fab fa-whatsapp text-3xl"></i>
             </a>
             <!-- Call Button -->
             <a href="tel:+919791406236"
-               class="flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-gray-900 w-14 h-14 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110"
+               class="flex items-center justify-center bg-[#10B981] hover:bg-[#059669] text-white w-16 h-16 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110"
                aria-label="Call Us">
                 <i class="fa-solid fa-phone-volume text-xl"></i>
             </a>
         </div>
     </div>
 
-    <script>
-        // Get the form element
-        const form = document.getElementById('callBackForm');
-        // Get all slides in the carousel
-        const slides = document.querySelectorAll('.carousel-slide');
-        let currentSlide = 0;
+    <!-- Booking Confirmation Modal -->
+    <div id="bookingModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 class="text-3xl font-bold text-[#10B981] mb-4">Confirm Your Booking</h3>
+            <p id="modal-text" class="text-gray-300 mb-6"></p>
+            <button id="modal-whatsapp-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl transition-colors duration-300">
+                Proceed to WhatsApp
+            </button>
+        </div>
+    </div>
 
-        // Function to show a specific slide and hide others
+    <script>
+        // Get all necessary DOM elements
+        const form = document.getElementById('callBackForm');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const reviewSlides = document.querySelectorAll('.review-slide');
+        const bookingModal = document.getElementById('bookingModal');
+        const modalText = document.getElementById('modal-text');
+        const modalWhatsappBtn = document.getElementById('modal-whatsapp-btn');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let currentSlide = 0;
+        let currentReviewSlide = 0;
+
+        // Function to show a specific carousel slide
         function showSlide(index) {
             slides.forEach((slide, i) => {
-                if (i === index) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
+                slide.classList.toggle('active', i === index);
             });
         }
 
@@ -253,24 +515,72 @@
         // Initial call to show the first slide
         showSlide(currentSlide);
 
+        // Function to show a specific review slide
+        function showReviewSlide(index) {
+            reviewSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        // Function to move to the next review slide
+        function nextReviewSlide() {
+            currentReviewSlide = (currentReviewSlide + 1) % reviewSlides.length;
+            showReviewSlide(currentReviewSlide);
+        }
+
+        // Set an interval to automatically slide the review carousel every 5 seconds
+        setInterval(nextReviewSlide, 5000);
+
+        // Initial call to show the first review slide
+        showReviewSlide(currentReviewSlide);
+
+        // Function to show the modal
+        function showModal(message, whatsappUrl) {
+            modalText.innerText = message;
+            modalWhatsappBtn.onclick = () => {
+                window.location.href = whatsappUrl;
+            };
+            bookingModal.style.display = 'flex';
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            bookingModal.style.display = 'none';
+        }
+
+        // Toggle mobile menu visibility
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('-translate-x-full');
+        });
+
+        // Function to close the mobile menu
+        function closeMobileMenu() {
+            mobileMenu.classList.add('-translate-x-full');
+        }
+
         // Add a submit event listener to the form
         form.addEventListener('submit', function(event) {
-            // Prevent the default form submission behavior (which would reload the page)
             event.preventDefault();
 
-            // Get the values from the form inputs
+            // Get form values
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const vehicle = document.getElementById('vehicle').value;
             const pickup = document.getElementById('pickup').value;
             const dropoff = document.getElementById('dropoff').value;
 
             // Define the recipient's WhatsApp number
-            const whatsappNumber = '+919791406236'; // Replace with your actual WhatsApp number
+            const whatsappNumber = '+919791406236';
 
             // Construct the message string with all the details
             let whatsappMessage = `Hello Subash Call Taxi, I want to book a taxi.\n\n`;
             whatsappMessage += `Name: ${name}\n`;
             whatsappMessage += `Phone: ${phone}\n`;
+            whatsappMessage += `Date: ${date}\n`;
+            whatsappMessage += `Time: ${time}\n`;
+            whatsappMessage += `Vehicle: ${vehicle}\n`;
             whatsappMessage += `Pickup: ${pickup}\n`;
             whatsappMessage += `Drop-off: ${dropoff}\n`;
 
@@ -280,8 +590,9 @@
             // Construct the final WhatsApp URL
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-            // Redirect the user to the WhatsApp URL
-            window.location.href = whatsappUrl;
+            // Show the modal with the booking summary
+            const modalMessage = `Please confirm to send the following details to us via WhatsApp:\n\nName: ${name}\nPhone: ${phone}\nDate: ${date}\nTime: ${time}\nPickup: ${pickup}\nDrop-off: ${dropoff}`;
+            showModal(modalMessage, whatsappUrl);
         });
     </script>
 </body>
