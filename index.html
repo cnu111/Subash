@@ -82,6 +82,13 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        /* Hover effects for service boxes */
+        .service-box:hover {
+            transform: translateY(-5px);
+            background-color: #1a1a1a;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -91,7 +98,7 @@
         <div class="overlay"></div>
 
         <!-- Main Container Card, relative to the background for proper z-index -->
-        <main class="relative z-10 w-full max-w-2xl bg-gray-900 bg-opacity-95 rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-10 mb-8 border border-gray-800">
+        <main class="relative z-10 w-full max-w-2xl bg-gray-900 bg-opacity-95 rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-10 mb-8 border border-gray-800 animate-fadeIn">
             <!-- Header Section -->
             <header class="text-center mb-10">
                 <h1 class="text-4xl sm:text-5xl font-extrabold text-amber-500 mb-2">Subash Call Taxi</h1>
@@ -103,15 +110,15 @@
                 <div id="image-carousel">
                     <!-- Image 1 -->
                     <div class="carousel-slide active">
-                        <img src="car1.jpg" alt="Luxury Sedan" class="carousel-img">
+                        <img src="car1.jpg" alt="Luxury Sedan" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/1c1c1c/f5f5f5?text=car1.jpg'">
                     </div>
                     <!-- Image 2 -->
                     <div class="carousel-slide">
-                        <img src="car2.jpg" alt="Premium SUV" class="carousel-img">
+                        <img src="car2.jpg" alt="Premium SUV" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/1c1c1c/f5f5f5?text=car2.jpg'">
                     </div>
                     <!-- Image 3 -->
                     <div class="carousel-slide">
-                        <img src="car3.jpg" alt="Spacious Van" class="carousel-img">
+                        <img src="car3.jpg" alt="Spacious Van" class="carousel-img" onerror="this.onerror=null;this.src='https://placehold.co/800x450/1c1c1c/f5f5f5?text=car3.jpg'">
                     </div>
                 </div>
             </div>
@@ -157,17 +164,17 @@
             <section class="mb-8">
                 <h2 class="text-2xl font-bold text-amber-500 text-center mb-6">Our Services</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 service-box transition-all duration-300">
                         <i class="fa-solid fa-taxi service-icon mb-2"></i>
                         <h3 class="font-semibold text-lg text-gray-200 mb-1">Local Travel</h3>
                         <p class="text-sm text-gray-400">Book for travel inside the city.</p>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 service-box transition-all duration-300">
                         <i class="fa-solid fa-road service-icon mb-2"></i>
                         <h3 class="font-semibold text-lg text-gray-200 mb-1">Outstation Travel</h3>
                         <p class="text-sm text-gray-400">Book for trips to other cities.</p>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 service-box transition-all duration-300">
                         <i class="fa-solid fa-plane service-icon mb-2"></i>
                         <h3 class="font-semibold text-lg text-gray-200 mb-1">Airport Transfer</h3>
                         <p class="text-sm text-gray-400">Easy airport pickup and drop.</p>
