@@ -1,321 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#111111" />
-  <title>Luxury Car Booking</title>
-  <style>
-    :root{
-      --bg:#0b0b0f;
-      --text:#ffffff;
-      --muted:#cfd3d7;
-      --accent:#25d366; /* WhatsApp */
-      --accent-dark:#128c7e;
-      --call:#28a745;
-      --insta-1:#feda75; --insta-2:#d62976; --insta-3:#962fbf; --insta-4:#4f5bd5;
-      --glass: rgba(255,255,255,0.08);
-      --glass-strong: rgba(255,255,255,0.12);
-      --shadow: 0 10px 30px rgba(0,0,0,0.45);
-      --radius: 18px;
-    }
+    <!-- Sets the character encoding for the document -->
+    <meta charset="UTF-8">
+    <!-- Ensures the page is responsive and looks good on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Sets the title of the webpage -->
+    <title>Subash Call Taxi - Book Your Premium Ride</title>
+    <!-- Loads Tailwind CSS for easy, utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Loads Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Links to Inter and Playfair Display fonts for a premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply the Inter font to the entire body, and a serif font for headings */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212; /* Dark background for a luxury feel */
+            color: #e0e0e0;
+        }
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+        }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color:var(--text);
-      background: var(--bg);
-      overflow-x:hidden;
-    }
+        /* Full-screen background image with a fixed position */
+        .background-container {
+            background-image: url('https://placehold.co/1920x1080/1c1c1c/f5f5f5?text=Subash+Call+Taxi'); /* New placeholder image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+        }
 
-    /* NAV */
-    nav{
-      position:fixed; inset:0 0 auto 0; height:64px; z-index:1000;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 22px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.35));
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-    }
-    .brand{display:flex; gap:10px; align-items:center; font-weight:700; letter-spacing:.5px}
-    .brand .logo{width:36px; height:36px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg,#1f2937,#111827); box-shadow:var(--shadow)}
-    .brand span{font-size:18px}
+        /* Overlay to darken the background image and improve text readability */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75); /* Darker overlay for a moodier, luxury look */
+        }
 
-    .nav-links{display:flex; gap:20px; align-items:center}
-    .nav-links a{color:var(--text); text-decoration:none; opacity:.9}
-    .nav-links a:hover{opacity:1; color:var(--accent)}
+        /* Custom styling for the service icons */
+        .service-icon {
+            font-size: 3rem;
+            color: #e0b445; /* Gold color for a premium touch */
+        }
 
-    /* Hamburger */
-    .hamburger{display:none; width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,0.15); background:var(--glass); backdrop-filter:blur(8px);
-      display:none; align-items:center; justify-content:center; cursor:pointer}
-    .hamburger span,.hamburger::before,.hamburger::after{
-      content:""; display:block; width:20px; height:2px; background:#fff; transition:transform .25s ease,opacity .25s ease; border-radius:2px
-    }
-    .hamburger::before{transform:translateY(-6px)}
-    .hamburger::after{transform:translateY(6px)}
-    .hamburger.active span{opacity:0}
-    .hamburger.active::before{transform:translateY(0) rotate(45deg)}
-    .hamburger.active::after{transform:translateY(0) rotate(-45deg)}
+        /* Carousel specific styles */
+        .carousel-container {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        .carousel-slide {
+            display: none;
+            animation: fadeIn 1s;
+        }
+        .carousel-slide.active {
+            display: block;
+        }
+        .carousel-img {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+        }
 
-    /* Mobile drawer */
-    .drawer{position:fixed; top:64px; right:12px; left:12px; background:var(--glass); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.14); border-radius:14px; box-shadow:var(--shadow); display:none}
-    .drawer a{display:block; padding:14px 16px; color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.08)}
-    .drawer a:last-child{border-bottom:none}
-
-    /* HERO */
-    .hero{
-      min-height:100vh; display:grid; place-items:center; text-align:center; padding:0 16px;
-      background:
-        radial-gradient(60% 70% at 20% 10%, rgba(37,211,102,0.12), transparent 60%),
-        radial-gradient(50% 60% at 80% 30%, rgba(79,91,213,0.14), transparent 60%),
-        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
-        url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
-    }
-    .hero-inner{margin-top:64px; max-width:920px}
-    .kicker{display:inline-block; padding:6px 10px; font-size:12px; letter-spacing:.6px; text-transform:uppercase; color:var(--muted); border:1px solid rgba(255,255,255,0.18); border-radius:999px; background:var(--glass)}
-    .title{font-size:clamp(34px,5vw,64px); line-height:1.05; margin:14px auto}
-    .subtitle{font-size:clamp(16px,2.2vw,20px); color:#e7e9ee; opacity:.9; max-width:760px; margin:0 auto 18px}
-    .cta-row{margin-top:18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
-    .btn{appearance:none; border:none; cursor:pointer; text-decoration:none; color:#fff; padding:14px 18px; border-radius:12px; font-weight:600; box-shadow:var(--shadow)}
-    .btn-primary{background:linear-gradient(135deg,var(--accent), var(--accent-dark))}
-    .btn-ghost{background:var(--glass); border:1px solid rgba(255,255,255,0.16)}
-
-    /* CARS */
-    section{padding:80px 18px}
-    .section-title{font-size:28px; text-align:center; margin-bottom:18px}
-    .carousel{max-width:1000px; margin:0 auto; position:relative; overflow:hidden; border-radius:var(--radius); box-shadow:var(--shadow); background:#000}
-    .slides{position:relative}
-    .slides img{width:100%; display:none}
-    .slides img.active{display:block; animation:fade 1.4s ease}
-    @keyframes fade{from{opacity:.25; transform:scale(1.04)} to{opacity:1; transform:scale(1)}}
-    .dots{position:absolute; left:0; right:0; bottom:12px; display:flex; gap:8px; justify-content:center}
-    .dot{width:10px; height:10px; border-radius:999px; background:rgba(255,255,255,0.45); border:1px solid rgba(255,255,255,0.6); cursor:pointer}
-    .dot.active{background:#fff}
-    .ctrl{position:absolute; top:50%; transform:translateY(-50%); background:var(--glass); border:1px solid rgba(255,255,255,0.14); width:44px; height:44px; border-radius:12px; display:grid; place-items:center; cursor:pointer}
-    .ctrl:hover{background:var(--glass-strong)}
-    .ctrl.left{left:12px}
-    .ctrl.right{right:12px}
-
-    /* CONTACT */
-    .contact-wrap{max-width:980px; margin:0 auto; display:grid; grid-template-columns: 1.2fr .8fr; gap:22px}
-    .contact-card{background:var(--glass); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.14); padding:22px; border-radius:var(--radius); box-shadow:var(--shadow)}
-    form{display:grid; gap:12px}
-    label{font-size:14px; color:var(--muted)}
-    input, textarea{width:100%; padding:12px 14px; background:rgba(255,255,255,0.12); color:#fff; border:1px solid rgba(255,255,255,0.18); border-radius:12px}
-    input::placeholder, textarea::placeholder{color:#dde1e6}
-    textarea{min-height:110px; resize:vertical}
-    .submit{background:linear-gradient(135deg,var(--accent), var(--accent-dark)); border:none; color:#fff; padding:14px; border-radius:12px; font-weight:700; cursor:pointer}
-
-    .card-side{background:var(--glass); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.14); padding:22px; border-radius:var(--radius); box-shadow:var(--shadow)}
-    .info-line{display:flex; align-items:center; gap:10px; margin:10px 0}
-    .pill{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.16)}
-
-    /* Floating action buttons */
-    .fab-col{position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:12px; z-index:1200}
-    .fab{width:56px; height:56px; border-radius:16px; display:grid; place-items:center; color:#fff; text-decoration:none; box-shadow:var(--shadow); transition:transform .2s ease, box-shadow .2s ease}
-    .fab:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(0,0,0,0.55)}
-    .fab.call{background:var(--call)}
-    .fab.wa{background:linear-gradient(135deg,var(--accent), var(--accent-dark))}
-    .fab.ig{background:linear-gradient(135deg,var(--insta-1), var(--insta-2), var(--insta-3), var(--insta-4))}
-
-    footer{padding:28px 18px; text-align:center; color:#cdd1d6; background:rgba(0,0,0,0.6); border-top:1px solid rgba(255,255,255,0.14); margin-top:60px}
-
-    /* RESPONSIVE */
-    @media (max-width: 980px){
-      .contact-wrap{grid-template-columns:1fr}
-    }
-    @media (max-width: 760px){
-      .nav-links{display:none}
-      .hamburger{display:flex}
-      .fab{width:52px; height:52px; border-radius:14px}
-    }
-  </style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
-<body>
-  <!-- NAV -->
-  <nav>
-    <div class="brand">
-      <div class="logo" aria-hidden="true">🚗</div>
-      <span>Car Booking</span>
+<body class="antialiased">
+
+    <!-- Background container with image and overlay -->
+    <div class="background-container">
+        <div class="overlay"></div>
+
+        <!-- Main Container Card, relative to the background for proper z-index -->
+        <main class="relative z-10 w-full max-w-2xl bg-gray-900 bg-opacity-95 rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-10 mb-8 border border-gray-800">
+            <!-- Header Section -->
+            <header class="text-center mb-10">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-amber-500 mb-2">Subash Call Taxi</h1>
+                <p class="text-lg sm:text-xl text-gray-400">Your number one taxi service for all travels.</p>
+            </header>
+
+            <!-- Image Carousel Section -->
+            <div class="carousel-container mx-auto">
+                <div id="image-carousel">
+                    <!-- Image 1 -->
+                    <div class="carousel-slide active">
+                        <img src="https://placehold.co/800x450/1c1c1c/f5f5f5?text=car1.png" alt="Luxury Sedan" class="carousel-img">
+                    </div>
+                    <!-- Image 2 -->
+                    <div class="carousel-slide">
+                        <img src="https://placehold.co/800x450/1c1c1c/f5f5f5?text=car2.png" alt="Premium SUV" class="carousel-img">
+                    </div>
+                    <!-- Image 3 -->
+                    <div class="carousel-slide">
+                        <img src="https://placehold.co/800x450/1c1c1c/f5f5f5?text=car3.png" alt="Spacious Van" class="carousel-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form Section -->
+            <section class="bg-gray-800 p-6 rounded-2xl border border-gray-700 mb-8">
+                <h2 class="text-2xl font-bold text-amber-500 mb-4 text-center">Book Your Ride Now</h2>
+                <p class="text-gray-400 mb-6 text-center">Enter your details and click 'Book' to connect with us on WhatsApp.</p>
+                <form id="callBackForm" class="space-y-4">
+                    <!-- Full Name Input -->
+                    <div>
+                        <label for="name" class="block text-gray-400 font-medium mb-1">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name" required
+                               class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <!-- Phone Number Input -->
+                    <div>
+                        <label for="phone" class="block text-gray-400 font-medium mb-1">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required
+                               class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <!-- Pickup Location Input -->
+                    <div>
+                        <label for="pickup" class="block text-gray-400 font-medium mb-1">Pickup Location</label>
+                        <input type="text" id="pickup" name="pickup" placeholder="e.g., Chennai Airport" required
+                               class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <!-- Drop-off Location Input -->
+                    <div>
+                        <label for="dropoff" class="block text-gray-400 font-medium mb-1">Drop-off Location</label>
+                        <input type="text" id="dropoff" name="dropoff" placeholder="e.g., Hotel Taj Coromandel" required
+                               class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit"
+                            class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-4 rounded-xl transition-colors duration-300">
+                        Book Your Taxi
+                    </button>
+                </form>
+            </section>
+
+            <!-- Services Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold text-amber-500 text-center mb-6">Our Services</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                        <i class="fa-solid fa-taxi service-icon mb-2"></i>
+                        <h3 class="font-semibold text-lg text-gray-200 mb-1">Local Travel</h3>
+                        <p class="text-sm text-gray-400">Book for travel inside the city.</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                        <i class="fa-solid fa-road service-icon mb-2"></i>
+                        <h3 class="font-semibold text-lg text-gray-200 mb-1">Outstation Travel</h3>
+                        <p class="text-sm text-gray-400">Book for trips to other cities.</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                        <i class="fa-solid fa-plane service-icon mb-2"></i>
+                        <h3 class="font-semibold text-lg text-gray-200 mb-1">Airport Transfer</h3>
+                        <p class="text-sm text-gray-400">Easy airport pickup and drop.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="bg-gray-800 p-6 rounded-2xl border-2 border-gray-700">
+                <h2 class="text-2xl font-bold text-amber-500 mb-4 text-center">Contact Us</h2>
+                <div class="text-center space-y-4">
+                    <p class="text-gray-400">Have a question? Call us anytime.</p>
+                    <a href="tel:+919876543210" class="inline-flex items-center text-lg text-amber-500 hover:underline transition-colors duration-300">
+                        <i class="fa-solid fa-phone mr-2"></i> +91 98765 43210
+                    </a>
+                    <p class="text-gray-400">Or find us on social media.</p>
+                    <div class="flex justify-center space-x-4 text-2xl">
+                        <a href="#" class="text-gray-500 hover:text-amber-500 transition-colors duration-300" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-amber-500 transition-colors duration-300" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-amber-500 transition-colors duration-300" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="relative z-10 w-full max-w-2xl text-center text-gray-400 text-sm mt-4">
+            &copy; 2024 Subash Call Taxi. All Rights Reserved.
+        </footer>
+
+        <!-- Floating Action Buttons for Call and WhatsApp -->
+        <div class="fixed bottom-5 right-5 flex flex-col space-y-4 z-50">
+            <!-- WhatsApp Button -->
+            <a href="https://wa.me/919791406236"
+               class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white w-14 h-14 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110"
+               target="_blank"
+               aria-label="WhatsApp Chat">
+                <i class="fab fa-whatsapp text-3xl"></i>
+            </a>
+            <!-- Call Button -->
+            <a href="tel:+919791406236"
+               class="flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-gray-900 w-14 h-14 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110"
+               aria-label="Call Us">
+                <i class="fa-solid fa-phone-volume text-xl"></i>
+            </a>
+        </div>
     </div>
-    <div class="nav-links" id="navLinks">
-      <a href="#home">Home</a>
-      <a href="#cars">Cars</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span></button>
-  </nav>
-  <div class="drawer" id="drawer">
-    <a href="#home">Home</a>
-    <a href="#cars">Cars</a>
-    <a href="#contact">Contact</a>
-  </div>
 
-  <!-- HERO -->
-  <section id="home" class="hero">
-    <div class="hero-inner">
-      <span class="kicker">Premium rides, trusted service</span>
-      <h1 class="title">Book a luxury car in seconds</h1>
-      <p class="subtitle">Instant WhatsApp booking, transparent pricing, and clean, well maintained vehicles. Outstation, airport pickup, and city rides available 24x7.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" id="heroBookNow" href="#contact">Book now</a>
-        <a class="btn btn-ghost" href="#cars">View cars</a>
-      </div>
-    </div>
-  </section>
+    <script>
+        // Get the form element
+        const form = document.getElementById('callBackForm');
+        // Get all slides in the carousel
+        const slides = document.querySelectorAll('.carousel-slide');
+        let currentSlide = 0;
 
-  <!-- CARS / SLIDESHOW -->
-  <section id="cars" aria-label="Our cars">
-    <h2 class="section-title">Our fleet</h2>
-    <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Car images">
-      <button class="ctrl left" id="prev" aria-label="Previous slide">◀</button>
-      <div class="slides" id="slides">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1605522300599-27a8d1f7e7a6?auto=format&fit=crop&w=1600&q=80" alt="Black luxury sedan front three quarter" class="active">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1511914265871-c4e8e1a9e6c9?auto=format&fit=crop&w=1600&q=80" alt="Red sports car on road">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1512499617640-c2f999098c01?auto=format&fit=crop&w=1600&q=80" alt="White coupe parked at night">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1541443131876-b9f2b4f8a3b4?auto=format&fit=crop&w=1600&q=80" alt="SUV in mountains">
-      </div>
-      <button class="ctrl right" id="next" aria-label="Next slide">▶</button>
-      <div class="dots" id="dots" aria-hidden="true"></div>
-    </div>
-  </section>
+        // Function to show a specific slide and hide others
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+        }
 
-  <!-- CONTACT -->
-  <section id="contact" aria-label="Contact form">
-    <h2 class="section-title">Contact us</h2>
-    <div class="contact-wrap">
-      <div class="contact-card">
-        <form id="contactForm" autocomplete="on">
-          <div>
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Your name" required />
-          </div>
-          <div>
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="Your phone" pattern="[0-9+\-\s]{7,15}" required />
-          </div>
-          <div>
-            <label for="pickup">Pickup location</label>
-            <input id="pickup" name="pickup" type="text" placeholder="Eg. Chennai Airport" />
-          </div>
-          <div>
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Trip date, time, car type" required></textarea>
-          </div>
-          <button class="submit" type="submit">Submit on WhatsApp</button>
-        </form>
-        <p style="margin-top:10px; color:var(--muted); font-size:14px">Submitting opens WhatsApp with your details. You can edit before sending.</p>
-      </div>
-      <aside class="card-side">
-        <div class="pill">24x7 support</div>
-        <div class="pill">Airport pickup</div>
-        <div class="pill">Outstation</div>
-        <div class="info-line">📞 <a id="callInline" href="tel:+919876543210" style="color:#fff; text-decoration:none">+91 98765 43210</a></div>
-        <div class="info-line">📍 Chennai and nearby cities</div>
-        <div class="info-line">🧽 Clean and sanitized cars</div>
-      </aside>
-    </div>
-  </section>
+        // Function to move to the next slide
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
 
-  <!-- Floating buttons -->
-  <div class="fab-col">
-    <a class="fab call" id="callFab" href="tel:+919876543210" aria-label="Call">
-      📞
-    </a>
-    <a class="fab wa" id="waFab" href="https://wa.me/919876543210" target="_blank" rel="noopener" aria-label="WhatsApp">
-      💬
-    </a>
-    <a class="fab ig" href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
-      📸
-    </a>
-  </div>
+        // Set an interval to automatically slide the carousel every 3 seconds
+        setInterval(nextSlide, 3000);
 
-  <footer>
-    © 2025 Car Booking. All rights reserved.
-  </footer>
+        // Initial call to show the first slide
+        showSlide(currentSlide);
 
-  <script>
-    // ===== CONFIG: set your business numbers here once =====
-    const BUSINESS_PHONE_E164 = "919876543210"; // WhatsApp without +
-    const CALL_PHONE = "+919876543210";       // tel: with +
+        // Add a submit event listener to the form
+        form.addEventListener('submit', function(event) {
+            // Prevent the default form submission behavior (which would reload the page)
+            event.preventDefault();
 
-    // Update all phone dependent links in one place
-    document.getElementById("waFab").href = `https://wa.me/${BUSINESS_PHONE_E164}`;
-    document.getElementById("callFab").href = `tel:${CALL_PHONE}`;
-    document.getElementById("callInline").href = `tel:${CALL_PHONE}`;
+            // Get the values from the form inputs
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const pickup = document.getElementById('pickup').value;
+            const dropoff = document.getElementById('dropoff').value;
 
-    // ===== Mobile menu
-    const hamburger = document.getElementById('hamburger');
-    const drawer = document.getElementById('drawer');
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
-    });
-    drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-      drawer.style.display='none'; hamburger.classList.remove('active');
-    }));
+            // Define the recipient's WhatsApp number
+            const whatsappNumber = '+919791406236'; // Replace with your actual WhatsApp number
 
-    // ===== Carousel
-    const slides = Array.from(document.querySelectorAll('#slides img'));
-    const dotsWrap = document.getElementById('dots');
-    let index = 0; let timer;
+            // Construct the message string with all the details
+            let whatsappMessage = `Hello Subash Call Taxi, I want to book a taxi.\n\n`;
+            whatsappMessage += `Name: ${name}\n`;
+            whatsappMessage += `Phone: ${phone}\n`;
+            whatsappMessage += `Pickup: ${pickup}\n`;
+            whatsappMessage += `Drop-off: ${dropoff}\n`;
 
-    function renderDots(){
-      dotsWrap.innerHTML = '';
-      slides.forEach((_,i)=>{
-        const d = document.createElement('button');
-        d.className = 'dot' + (i===index ? ' active' : '');
-        d.addEventListener('click', ()=>go(i));
-        dotsWrap.appendChild(d);
-      });
-    }
+            // URL-encode the message
+            const encodedMessage = encodeURIComponent(whatsappMessage);
 
-    function go(i){
-      slides[index].classList.remove('active');
-      index = (i+slides.length) % slides.length;
-      slides[index].classList.add('active');
-      renderDots();
-      reset();
-    }
+            // Construct the final WhatsApp URL
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-    function next(){ go(index+1); }
-    function prev(){ go(index-1); }
-
-    function reset(){
-      clearInterval(timer);
-      timer = setInterval(next, 4000);
-    }
-
-    document.getElementById('next').addEventListener('click', next);
-    document.getElementById('prev').addEventListener('click', prev);
-
-    renderDots();
-    reset();
-
-    // Pause on hover for accessibility
-    const carousel = document.querySelector('.carousel');
-    carousel.addEventListener('mouseenter', ()=>clearInterval(timer));
-    carousel.addEventListener('mouseleave', reset);
-
-    // ===== WhatsApp redirect on form submit
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const pickup = document.getElementById('pickup').value.trim();
-      const message = document.getElementById('message').value.trim();
-
-      const text = `Hi, I want to book a car.%0A`+
-                   `Name: ${encodeURIComponent(name)}%0A`+
-                   `Phone: ${encodeURIComponent(phone)}%0A`+
-                   (pickup?`Pickup: ${encodeURIComponent(pickup)}%0A`:``)+
-                   `Message: ${encodeURIComponent(message)}`;
-
-      const waUrl = `https://wa.me/${BUSINESS_PHONE_E164}?text=${text}`;
-      window.open(waUrl, '_blank');
-    });
-  </script>
+            // Redirect the user to the WhatsApp URL
+            window.location.href = whatsappUrl;
+        });
+    </script>
 </body>
 </html>
