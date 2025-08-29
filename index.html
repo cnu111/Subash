@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <!-- Sets the character encoding for the document -->
     <meta charset="UTF-8">
-    <!-- Ensures the page is responsive and looks good on all devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Sets the title of the webpage -->
     <title>Subash Call Taxi - Premium Ride Service</title>
-    <!-- Loads Tailwind CSS for easy, utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Loads Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Links to Inter and Playfair Display fonts for a premium look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght=700&display=swap" rel="stylesheet">
     <style>
         /* Base styles for typography and color palette */
         body {
@@ -604,7 +598,7 @@
             overflow-y: auto; /* Enable scrolling for form fields */
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: center; /* Center content vertically */
             align-items: center;
         }
         .mobile-menu-container.open {
@@ -621,11 +615,37 @@
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
         }
+
+        /* NEW CSS for Auto-Complete */
+        .autocomplete-dropdown {
+            position: absolute;
+            width: 100%;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-top: none;
+            z-index: 10;
+            max-height: 200px;
+            overflow-y: auto;
+            border-radius: 0 0 0.5rem 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            -webkit-overflow-scrolling: touch; /* For smoother scrolling on mobile */
+        }
+        .ac-item {
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
+            color: #e2e8f0;
+            transition: background-color 0.2s ease;
+        }
+        .ac-item:hover {
+            background-color: #334155;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Sticky Header -->
     <header class="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-2 text-2xl font-bold gradient-text">
@@ -639,14 +659,12 @@
                 <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300 nav-link-hover text-shadow-sm">Contact</a>
                 <a href="#booking" class="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2 rounded-full font-semibold transition-colors duration-300 bubble-btn btn-shine text-shadow-sm">Book Now</a>
             </div>
-            <!-- Mobile Menu Button -->
             <button id="mobile-menu-btn" class="md:hidden text-gray-300 focus:outline-none">
                 <i class="fa-solid fa-bars text-2xl"></i>
             </button>
         </nav>
     </header>
 
-    <!-- Mobile Menu Container -->
     <div id="mobile-menu" class="mobile-menu-container">
         <button id="close-mobile-menu-btn" class="close-btn">&times;</button>
         <div class="flex flex-col items-center">
@@ -655,153 +673,46 @@
             <a href="#fares" class="text-gray-300 hover:text-white transition-colors duration-300 py-4 text-shadow-sm mobile-menu-item" onclick="closeMobileMenu()">Fares</a>
             <a href="#reviews" class="text-gray-300 hover:text-white transition-colors duration-300 py-4 text-shadow-sm mobile-menu-item" onclick="closeMobileMenu()">Reviews</a>
             <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-300 py-4 text-shadow-sm mobile-menu-item" onclick="closeMobileMenu()">Contact</a>
-            
-            <div class="w-full h-px bg-gray-600 my-8"></div>
-            
-            <!-- Booking Form in Mobile Menu -->
-            <div class="w-full px-4">
-                <h3 class="text-2xl font-bold text-white mb-6 text-center">Quick Booking</h3>
-                <form id="mobileCallBackForm" class="space-y-4">
-                    <!-- Full Name Field -->
-                    <div>
-                        <label for="mobile-name" class="block text-gray-400 font-medium mb-1">Full Name</label>
-                        <input 
-                            type="text" 
-                            id="mobile-name" 
-                            name="name" 
-                            class="block w-full px-4 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-300" 
-                            placeholder="Srinivasan" 
-                            required
-                        >
-                    </div>
-                    <!-- Phone Number Field -->
-                    <div>
-                        <label for="mobile-phone" class="block text-gray-400 font-medium mb-1">Phone Number</label>
-                        <input 
-                            type="tel" 
-                            id="mobile-phone" 
-                            name="phone" 
-                            class="block w-full px-4 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-300" 
-                            placeholder="9791" 
-                            required
-                        >
-                    </div>
-                    <!-- Date Input -->
-                    <div>
-                        <label for="mobile-date" class="block text-gray-400 font-medium mb-1">Date</label>
-                        <input 
-                            type="date" 
-                            id="mobile-date" 
-                            name="date" 
-                            class="block w-full px-4 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-300" 
-                            required
-                        >
-                    </div>
-                    <!-- Time Input -->
-                    <div>
-                        <label for="mobile-time" class="block text-gray-400 font-medium mb-1">Time</label>
-                        <input 
-                            type="time" 
-                            id="mobile-time" 
-                            name="time" 
-                            class="block w-full px-4 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-300" 
-                            required
-                        >
-                    </div>
-                    <!-- Vehicle Type Selection -->
-                    <div>
-                        <label for="mobile-vehicle" class="block text-gray-400 font-medium mb-1">Vehicle Type</label>
-                        <select 
-                            id="mobile-vehicle" 
-                            name="vehicle"
-                            class="block w-full px-4 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-300"
-                        >
-                            <option value="sedan">Sedan</option>
-                            <option value="suv">SUV</option>
-                            <option value="van">Van</option>
-                        </select>
-                    </div>
-                    <!-- Pickup Location Input -->
-                    <div>
-                        <label for="mobile-pickup" class="block text-gray-400 font-medium mb-1">Pickup Location</label>
-                        <input 
-                            type="text" 
-                            id="mobile-pickup" 
-                            name="pickup" 
-                            class="block w-full px-4 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-300" 
-                            placeholder="Current Location" 
-                            required
-                        >
-                    </div>
-                    <!-- Drop-off Location Input -->
-                    <div>
-                        <label for="mobile-dropoff" class="block text-gray-400 font-medium mb-1">Drop-off Location</label>
-                        <input 
-                            type="text" 
-                            id="mobile-dropoff" 
-                            name="dropoff" 
-                            class="block w-full px-4 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#10B981] transition-all duration-300" 
-                            placeholder="Destination" 
-                            required
-                        >
-                    </div>
-                    <!-- Submit Button -->
-                    <button type="submit"
-                            class="w-full text-white font-bold py-5 rounded-xl transition-all duration-300 bubble-btn btn-shine border-animate text-shadow-sm">
-                        Book Your Taxi
-                    </button>
-                </form>
-            </div>
+            <a href="#booking" class="bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2 rounded-full font-semibold transition-colors duration-300 bubble-btn btn-shine text-shadow-sm mobile-menu-item" onclick="closeMobileMenu()">Book Now</a>
         </div>
     </div>
 
 
-    <!-- Main Container for the new clean background -->
     <div class="main-container">
 
-        <!-- Main Content Card -->
         <main class="relative z-10 w-full max-w-2xl bg-[#1E293B] rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-10 mb-8 border border-[#334155] section-card">
-            <!-- Header Section -->
             <header class="text-center mb-12">
                 <h1 class="text-5xl sm:text-6xl font-extrabold gradient-text mb-4 leading-tight">Subash Call Taxi</h1>
                 <p class="text-xl sm:text-2xl text-gray-300 font-medium tracking-wide">Your journey, elevated.</p>
                 <p class="text-md text-gray-400 mt-2">Premium rides for ultimate comfort and style.</p>
             </header>
 
-            <!-- Image Carousel Section -->
             <div class="carousel-container mx-auto glass-card card-3d-hover">
                 <div id="image-carousel">
-                    <!-- Image 1 -->
                     <div class="carousel-slide active">
-                        <img src="https://placehold.co/800x450/374151/D1D5DB?text=Luxury+Car" alt="Luxury Sedan" class="carousel-img image-hover-zoom image-filter-hover">
+                        <img src="car1.jpg" alt="Luxury Sedan" class="carousel-img image-hover-zoom image-filter-hover">
                     </div>
-                    <!-- Image 2 -->
                     <div class="carousel-slide">
-                        <img src="https://placehold.co/800x450/374151/D1D5DB?text=Premium+SUV" alt="Premium SUV" class="carousel-img image-hover-zoom image-filter-hover">
+                        <img src="car2.jpg" alt="Premium SUV" class="carousel-img image-hover-zoom image-filter-hover">
                     </div>
-                    <!-- Image 3 -->
                     <div class="carousel-slide">
-                        <img src="https://placehold.co/800x450/374151/D1D5DB?text=Spacious+Van" alt="Spacious Van" class="carousel-img image-hover-zoom image-filter-hover">
+                        <img src="car3.jpg" alt="Spacious Van" class="carousel-img image-hover-zoom image-filter-hover">
                     </div>
                 </div>
             </div>
 
-            <!-- Booking Form Section -->
             <section id="booking" class="bg-gray-900 p-8 rounded-3xl border border-gray-800 mb-12 shadow-inner section-card section-scroll-transform">
                 <h2 class="text-3xl font-bold gradient-text mb-6 text-center">Book Your Ride Now</h2>
                 
-                <!-- New Easy Booking Section -->
                 <div class="mb-8 p-6 bg-gray-800 rounded-2xl border border-gray-700 text-center shadow-md">
                     <h3 class="text-gray-300 font-semibold mb-4 text-lg">Experience effortless booking.</h3>
                     <a href="https://wa.me/919791406236?text=Hi%2C%20I'd%20like%20to%20book%20a%20taxi." class="inline-block w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg cta-pulse bubble-btn btn-shine text-shadow-sm">
                         <i class="fab fa-whatsapp mr-2 text-xl"></i> Easy Booking via WhatsApp
                     </a>
-                    <!-- New, shortened text below the button -->
                     <p class="text-gray-400 mt-4 text-sm font-medium">Or, fill the form below and we'll reach out to you.</p>
                 </div>
 
                 <form id="callBackForm" class="space-y-4">
-                    <!-- Full Name Field -->
                     <div>
                         <label for="name" class="block text-gray-400 font-medium mb-1">Full Name</label>
                         <input 
@@ -813,7 +724,6 @@
                             required
                         >
                     </div>
-                    <!-- Phone Number Field -->
                     <div>
                         <label for="phone" class="block text-gray-400 font-medium mb-1">Phone Number</label>
                         <input 
@@ -825,7 +735,6 @@
                             required
                         >
                     </div>
-                    <!-- Date Input -->
                     <div>
                         <label for="date" class="block text-gray-400 font-medium mb-1">Date</label>
                         <input 
@@ -836,7 +745,6 @@
                             required
                         >
                     </div>
-                    <!-- Time Input -->
                     <div>
                         <label for="time" class="block text-gray-400 font-medium mb-1">Time</label>
                         <input 
@@ -847,7 +755,6 @@
                             required
                         >
                     </div>
-                    <!-- Vehicle Type Selection -->
                     <div>
                         <label for="vehicle" class="block text-gray-400 font-medium mb-1">Vehicle Type</label>
                         <select 
@@ -860,8 +767,7 @@
                             <option value="van">Van</option>
                         </select>
                     </div>
-                    <!-- Pickup Location Input -->
-                    <div>
+                    <div class="relative">
                         <label for="pickup" class="block text-gray-400 font-medium mb-1">Pickup Location</label>
                         <input 
                             type="text" 
@@ -871,9 +777,9 @@
                             placeholder="Current Location" 
                             required
                         >
+                        <div id="pickup-ac" class="autocomplete-dropdown hidden"></div>
                     </div>
-                    <!-- Drop-off Location Input -->
-                    <div>
+                    <div class="relative">
                         <label for="dropoff" class="block text-gray-400 font-medium mb-1">Drop-off Location</label>
                         <input 
                             type="text" 
@@ -883,8 +789,8 @@
                             placeholder="Destination" 
                             required
                         >
+                        <div id="dropoff-ac" class="autocomplete-dropdown hidden"></div>
                     </div>
-                    <!-- Submit Button -->
                     <button type="submit"
                             class="w-full text-white font-bold py-5 rounded-xl transition-all duration-300 bubble-btn btn-shine border-animate text-shadow-sm">
                         Book Your Taxi
@@ -892,7 +798,6 @@
                 </form>
             </section>
 
-            <!-- Services Section -->
             <section id="services" class="mb-12 section-card p-6 rounded-3xl section-scroll-transform">
                 <h2 class="text-3xl font-bold gradient-text text-center mb-8">Our Services</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
@@ -914,7 +819,6 @@
                 </div>
             </section>
             
-            <!-- New Features Section -->
             <section id="features" class="mb-12 section-card p-6 rounded-3xl section-scroll-transform">
                 <h2 class="text-3xl font-bold gradient-text text-center mb-8">Why Choose Us?</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
@@ -936,7 +840,6 @@
                 </div>
             </section>
             
-            <!-- Fare Information Section -->
             <section id="fares" class="mb-12 section-card p-6 rounded-3xl section-scroll-transform">
                 <h2 class="text-3xl font-bold gradient-text text-center mb-8">Our Fares (Starting From)</h2>
                 <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-inner card-3d-hover">
@@ -975,11 +878,9 @@
                 </div>
             </section>
             
-            <!-- Reviews Section -->
             <section id="reviews" class="mb-12 review-section section-card p-6 rounded-3xl section-scroll-transform">
                 <h2 class="text-3xl font-bold gradient-text text-center mb-8">What Our Customers Say</h2>
                 <div class="review-carousel-container relative">
-                    <!-- First review slide -->
                     <div class="review-slide active grid grid-cols-1 sm:grid-cols-2 gap-8 review-slide-fade">
                         <div class="testimonial-card card-3d-hover mb-8 sm:mb-0">
                             <div class="star-rating mb-2">
@@ -1004,7 +905,6 @@
                             <p class="testimonial-author">- RanjithKumar</p>
                         </div>
                     </div>
-                    <!-- Second review slide -->
                     <div class="review-slide grid grid-cols-1 sm:grid-cols-2 gap-8 review-slide-fade">
                         <div class="testimonial-card card-3d-hover mb-8 sm:mb-0">
                             <div class="star-rating mb-2">
@@ -1032,7 +932,6 @@
                 </div>
             </section>
 
-            <!-- Contact Section -->
             <section id="contact" class="bg-gray-900 p-8 rounded-3xl border border-gray-800 shadow-inner section-card section-scroll-transform">
                 <h2 class="text-3xl font-bold gradient-text mb-6 text-center">Contact Us</h2>
                 <div class="text-center space-y-4">
@@ -1050,21 +949,17 @@
             </section>
         </main>
 
-        <!-- Footer -->
         <footer class="relative z-10 w-full max-w-2xl text-center text-gray-500 text-sm mt-8">
             &copy; 2024 Subash Call Taxi. All Rights Reserved.
         </footer>
 
-        <!-- Floating Action Buttons for Call and WhatsApp -->
         <div class="floating-btn-container">
-            <!-- WhatsApp Button -->
             <a href="https://wa.me/919791406236"
                class="floating-btn bg-green-500 hover:bg-green-600 text-white shadow-lg"
                target="_blank"
                aria-label="WhatsApp Chat">
                 <i class="fab fa-whatsapp text-2xl"></i>
             </a>
-            <!-- Call Button -->
             <a href="tel:+919791406236"
                class="floating-btn bg-[#10B981] hover:bg-[#059669] text-white shadow-lg"
                aria-label="Call Us">
@@ -1073,7 +968,6 @@
         </div>
     </div>
 
-    <!-- Booking Confirmation Modal -->
     <div id="bookingModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-button" onclick="closeModal()">&times;</span>
@@ -1088,7 +982,7 @@
     <script>
         // Get all necessary DOM elements
         const bookingForm = document.getElementById('callBackForm');
-        const mobileBookingForm = document.getElementById('mobileCallBackForm');
+        // const mobileBookingForm = document.getElementById('mobileCallBackForm'); // Removed as per new requirement
         const slides = document.querySelectorAll('.carousel-slide');
         const reviewSlides = document.querySelectorAll('.review-slide');
         const bookingModal = document.getElementById('bookingModal');
@@ -1100,8 +994,8 @@
         const navLinks = document.querySelectorAll('nav a[href^="#"]'); // Selects all nav links with an href starting with #
         const dateInput = document.getElementById('date');
         const timeInput = document.getElementById('time');
-        const mobileDateInput = document.getElementById('mobile-date');
-        const mobileTimeInput = document.getElementById('mobile-time');
+        // const mobileDateInput = document.getElementById('mobile-date'); // Removed as per new requirement
+        // const mobileTimeInput = document.getElementById('mobile-time'); // Removed as per new requirement
         
         let currentSlide = 0;
         let currentReviewSlide = 0;
@@ -1116,8 +1010,8 @@
             const minutes = now.getMinutes().toString().padStart(2, '0');
             dateInput.value = `${year}-${month}-${day}`;
             timeInput.value = `${hours}:${minutes}`;
-            mobileDateInput.value = `${year}-${month}-${day}`;
-            mobileTimeInput.value = `${hours}:${minutes}`;
+            // mobileDateInput.value = `${year}-${month}-${day}`; // Removed as per new requirement
+            // mobileTimeInput.value = `${hours}:${minutes}`; // Removed as per new requirement
         };
 
         // Function to show a specific carousel slide
@@ -1230,7 +1124,8 @@
             showModal(modalMessage, whatsappUrl);
         });
 
-        // Handle mobile form submission
+        // Removed mobile form submission logic as per new requirement
+        /*
         mobileBookingForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -1261,6 +1156,7 @@
             showModal(modalMessage, whatsappUrl);
             closeMobileMenu();
         });
+        */
         
         // Intersection Observer for fade-in effect on scroll
         const observerOptions = {
@@ -1281,6 +1177,57 @@
         document.querySelectorAll('.section-scroll-transform').forEach(section => {
             observer.observe(section);
         });
+
+        // NEW JAVASCRIPT FOR AUTOCOMPLETE
+        function setupAutocomplete(inputId, dropdownId) {
+            const input = document.getElementById(inputId);
+            const dropdown = document.getElementById(dropdownId);
+        
+            input.addEventListener("input", async () => {
+                const query = input.value.trim();
+                if (query.length < 3) {
+                    dropdown.classList.add("hidden");
+                    return;
+                }
+                try {
+                    const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5`);
+                    const data = await res.json();
+        
+                    dropdown.innerHTML = "";
+                    if (data.features.length === 0) {
+                        dropdown.classList.add("hidden");
+                        return;
+                    }
+        
+                    data.features.forEach(f => {
+                        const item = document.createElement("div");
+                        item.className = "ac-item";
+                        item.textContent = f.properties.name || f.properties.city || "Unknown";
+                        item.onclick = () => {
+                            input.value = item.textContent;
+                            dropdown.classList.add("hidden");
+                        };
+                        dropdown.appendChild(item);
+                    });
+                    dropdown.classList.remove("hidden");
+                } catch (err) {
+                    console.error("Autocomplete error:", err);
+                }
+            });
+        
+            document.addEventListener("click", (e) => {
+                if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.add("hidden");
+                }
+            });
+        }
+        
+        setupAutocomplete("pickup", "pickup-ac");
+        setupAutocomplete("dropoff", "dropoff-ac");
+        // Removed mobile autocomplete setups as the mobile form is removed
+        // setupAutocomplete("mobile-pickup", "mobile-pickup-ac");
+        // setupAutocomplete("mobile-dropoff", "mobile-dropoff-ac");
+
     </script>
 </body>
 </html>
